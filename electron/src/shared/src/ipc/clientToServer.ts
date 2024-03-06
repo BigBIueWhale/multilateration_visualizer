@@ -2,93 +2,14 @@ import { z } from 'zod';
 
 // Define Zod schemas for each API call
 
-export const CleanupRequest = z.object({});
-export const CleanupResponse = z.void();
-
-export const ListSerialPortsRequest = z.object({});
-
-export const ListSerialPortsResponse = z.array(z.string());
-
-export const SerialPortHandle = z.string();
-export const SERIAL_PORT_HANDLE_UNINITIALIZED: z.infer<typeof SerialPortHandle> = "";
-
-export const OpenPortRequest = z.object({
-  port: z.string(),
-  settings: z.object({
-    baudRate: z.number().int().positive(),
-    // Add other serial port settings here as needed
-  }),
-});
-
-export const OpenPortResponse = SerialPortHandle;
-
-export const ClosePortRequest = z.object({
-  handle: SerialPortHandle,
-});
-
-export const ClosePortResponse = z.void();
-
-export const StartReadingRequest = z.object({
-  handle: SerialPortHandle,
-});
-
-export const StartReadingResponse = z.void();
-
-export const StopReadingRequest = z.object({
-  handle: SerialPortHandle,
-});
-
-export const StopReadingResponse = z.void();
-
-export const WriteRequest = z.object({
-  handle: SerialPortHandle,
-  data: z.instanceof(Uint8Array),
-});
-
-export const WriteResponse = z.void();
-
-export const ReadRequest = z.object({
-  handle: SerialPortHandle,
-  // Value 0 is return immediately,
-  // super high value will wait forever (for all intents and purposes).
-  timeoutNanoseconds: z.number().int().nonnegative(),
-});
-
-export const ReadResponse = z.instanceof(Uint8Array);
+export const ExampleCallRequest = z.object({});
+export const ExampleCallResponse = z.void();
 
 // Define the API using Zod schemas
 export const apiSchemas = {
-  'ipc-cleanup': {
-    request: CleanupRequest,
-    response: CleanupResponse,
-  },
-  'ipc-listSerialPorts': {
-    request: ListSerialPortsRequest,
-    response: ListSerialPortsResponse,
-  },
-  'ipc-openPort': {
-    request: OpenPortRequest,
-    response: OpenPortResponse,
-  },
-  'ipc-closePort': {
-    request: ClosePortRequest,
-    response: ClosePortResponse,
-  },
-  'ipc-startReading': {
-    request: StartReadingRequest,
-    response: StartReadingResponse,
-  },
-  'ipc-stopReading': {
-    request: StopReadingRequest,
-    response: StopReadingResponse,
-  },
-  'ipc-write': {
-    request: WriteRequest,
-    response: WriteResponse,
-  },
-  'ipc-read': {
-    request: ReadRequest,
-    response: ReadResponse,
+  'ipc-example-call': {
+    request: ExampleCallRequest,
+    response: ExampleCallResponse,
   },
 };
 

@@ -1,5 +1,7 @@
 # Multilateration Visualizer
-An Electron TypeScript React app with extra horsepower from Rust server that provides a protobuf gRPC API and handles the serial communication with the tags.
+An Electron TypeScript React app with extra horsepower from Rust server
+
+The Rust CLI executable provides a protobuf gRPC API and handles the serial communication with the tags.
 
 # Multilateration Visualizer
 ![Multilateration Visualizer](/doc/multilateration.png)

@@ -1,23 +1,15 @@
 import { z } from 'zod';
-import { SerialPortHandle } from './clientToServer';
 
-export const SerialDataReceivedNotification = z.object({
-  handle: SerialPortHandle,
+// TODO: Make this data type define which voxels need to be drawn-in and
+// in what color.
+export const FrameData = z.object({
   data: z.instanceof(Uint8Array),
-});
-
-export const SerialErrorNotification = z.object({
-  handle: SerialPortHandle,
-  error: z.string(),
 });
 
 // Define the API using Zod schemas
 export const apiSchemasServerToClient = {
-  'notify-serialDataReceived': {
-    notification: SerialDataReceivedNotification,
-  },
-  'notify-serialError': {
-    notification: SerialErrorNotification,
+  'notify-new-frame': {
+    notification: FrameData,
   },
 };
 

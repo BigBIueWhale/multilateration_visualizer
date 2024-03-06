@@ -8,3 +8,5 @@ A few things are customized compared to the default Electron React Boilerplate r
 * Custom Material UI (@mui) based GUI
 * Toast implementation for pop-up messages to show user
 * Main server application handled in one main class `electron/src/main/src/MyApp.ts`, that is instantiated, initialized, and cleaned up in `electron/src/main/main.ts`
+* Type checking by default when building. electron-react-boilerplate has `transpileOnly: true` enabled in webpack.config.base so I disabled it to enable type checking.
+* `protobuf/compile_ts_proto.bat` generates a ts file that is required for building this project: `electron/src/shared/src/proto/grpc_api.ts`

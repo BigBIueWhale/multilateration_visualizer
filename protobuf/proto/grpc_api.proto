@@ -5,10 +5,10 @@ package workhorse;
 service MultilateralVisualizer {
     // A return value with keyword "stream" tells gRPC that the
     // function returns multiple times. Like subscribing to a flow of data.
-    rpc ReadFrames (ReadFrameRequest) returns (stream FrameData);
+    rpc read_frames (ReadFramesRequest) returns (stream FrameData);
 }
 
-message ReadFrameRequest {
+message ReadFramesRequest {
     // Empty
 }
 

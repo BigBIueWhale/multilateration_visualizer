@@ -1,4 +1,4 @@
-import { handleRpc, removeHandler } from "./rpc/handleRpc";
+//import { handleRpc, removeHandler } from "./rpc/handleRpc";
 import { emitNotification } from "./rpc/emitNotification";
 import { BrowserWindow } from "electron";
 import * as grpc from '@grpc/grpc-js';

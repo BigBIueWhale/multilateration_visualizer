@@ -1,12 +1,12 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { SerialCommPage } from './src/pages/SerialComm.page';
+import { MainPage } from './src/pages/Main.page';
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SerialCommPage />} />
+        <Route path="/" element={<MainPage />} />
       </Routes>
     </Router>
   );

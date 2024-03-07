@@ -32,6 +32,8 @@ export class MyApp {
         // TODO: Continuously read, cleanup etc from the stream of new frames
         // that are received from the Rust gRPC server, and send them as push notifications
         // to the client.
+
+        // emitNotification(browserWindow, "notify-new-frame", {});
     }
 
     public onAppClosing(): void {

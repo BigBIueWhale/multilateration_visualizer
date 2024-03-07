@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { offNotification, onNotification } from '../rpc/handleNotification';
 import { ToastContext, ToastNotifyMode } from '../Context/Toast.context';
 import { v4 as uuidv4 } from 'uuid';
-import { description, version } from "../../../../release/app/package.json";
+import packageJson from "../../../../release/app/package.json";
 import { NewFrame } from 'shared/src/ipc/serverToClient';
 
 export function MainPage() {
@@ -28,7 +28,7 @@ export function MainPage() {
     return (
         <Box sx={{ padding: 2, backgroundColor: '#f5f5f5' }}>
             <h1 style={{ color: '#3f51b5' }}>
-                {description} v{version}
+                {packageJson.description} v{packageJson.version}
             </h1>
 
         </Box>

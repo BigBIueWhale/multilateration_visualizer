@@ -1,4 +1,4 @@
-# Avoid users needing to install this globally on their computers:
+# This avoids users needing to install this globally on their computers:
 # https://aka.ms/vs/17/release/vc_redist.x64.exe
 # to avoid DLL errors with C/C++ runtime libraries.
 

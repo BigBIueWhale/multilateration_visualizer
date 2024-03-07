@@ -23,7 +23,8 @@ export class MyApp {
 
         // Create a client instance
         this.grpcClient = new MultilateralVisualizerClient(
-            '127.0.0.1:50051', // Replace with your server's address
+            // Run the Rust gRPC server executable before running the electron app
+            '[::1]:50051',
             grpc.credentials.createInsecure(),
         );
 

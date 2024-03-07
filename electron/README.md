@@ -4,9 +4,8 @@ Electron app that renders a 3d scene with Orbit control and displays Voxels base
 That allows us to visualize the quality and accuracy of multilateration tracking in realtime.
 
 # Dev Dependencies
-1. Node.JS npm
-2. Being online during `npm install` (having access to npm server for libraries)
-2. Install `/dev_environment/node-v20.11.0-x64.msi` on Windows or run `/dev_environment/install_correct_node_version.sh` on Linux (need to run as sudo)
+1. Being online during `npm install` (having access to npm server for libraries)
+2. Install `dev_environment/node-v20.11.0-x64.msi` on Windows or run `dev_environment/install_correct_node_version.sh` on Linux (need to run as sudo, then re-run according to usage instructions).
 3. Developed with Windows 10 22H2
 4. Developed with VS Code 1.87.0
 5. Extension: Material Icon Theme v4.34.0 by Philipp Kief

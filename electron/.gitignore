@@ -2,6 +2,7 @@
 /coverage
 /.eslintcache
 
+# Auto-generated when running npm install
 /.erb/dll
 
 # Dependency directory

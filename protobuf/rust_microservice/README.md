@@ -37,6 +37,7 @@ The heavy lifting, and the serial communication is done here.
 9. Todo Tree v0.0.226 by Gruntfuggly
 10. vscode-proto3 by zxh404
 11. CodeLLDB v1.10.0 by Vadim Chugunov
+12. Being online during build for crates.io index
 
 # Build
 

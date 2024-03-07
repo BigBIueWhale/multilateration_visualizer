@@ -10,7 +10,7 @@ The heavy lifting, and the serial communication is done here.
     1. Visual Studio 2022 globally installed with C++ and CMake enabled.
     2. Add CMake to windows PATH if needed:
     ```text
-    C:\Program Files\Microsoft Visual   Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin>cmake --version
+    C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin>cmake --version
     cmake version 3.26.4-msvc4
     
     CMake suite maintained and supported by Kitware (kitware.com/cmake).

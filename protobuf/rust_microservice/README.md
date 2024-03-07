@@ -40,9 +40,6 @@ The heavy lifting, and the serial communication is done here.
 12. Being online during build for crates.io index
 
 # Build
-
-TODO: Make this app statically link to MSVC libraries
-
 1. Install the `Dependencies`
 1. Run `protobuf/unzip.bat`, and read the outputed usage.
 2. Based on the usage instructions, run: `protobuf/unzip.bat --platform your_platform`
@@ -66,3 +63,74 @@ Would you like to generate launch configurations for its targets?
 In that case, click yes (that's what I did to get the launch.json).
 9. If when trying to debug, the build fails with `protoc not found` error, first run `compile.bat` and only then try to debug.
 10. Note: you can also click on the `Debug` button above the `async fn main()` function in VS Code, but Code LLDB is a better debugger. It also allows for more advanced debugging such as conditional breakpoints.
+
+# Distributing
+Look at `.cargo/config.toml`.
+
+This is how it looks like when an executable was compiled in a way that's good for distributing to Windows users:
+```cmd
+C:\Users\user>"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\dumpbin.exe" /DEPENDENTS C:\Users\user\Desktop\multilateration_visualizer\protobuf\rust_microservice\target\release\grpc_microservice.exe
+Microsoft (R) COFF/PE Dumper Version 14.37.32822.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Users\user\Desktop\multilateration_visualizer\protobuf\rust_microservice\target\release\grpc_microservice.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    bcrypt.dll
+    ADVAPI32.dll
+    ws2_32.dll
+    kernel32.dll
+    ntdll.dll
+    VCRUNTIME140.dll
+    api-ms-win-crt-math-l1-1-0.dll
+    api-ms-win-crt-runtime-l1-1-0.dll
+    api-ms-win-crt-stdio-l1-1-0.dll
+    api-ms-win-crt-locale-l1-1-0.dll
+    api-ms-win-crt-heap-l1-1-0.dll
+
+  Summary
+
+        4000 .data
+       13000 .pdata
+       A0000 .rdata
+        5000 .reloc
+      158000 .text
+
+C:\Users\user>
+```
+Notice that it requires a bunch of MSVC C/C++ runtime libraries.
+
+A good executable will have this output from `dumpbin` utility:
+```cmd
+C:\Users\user>"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\dumpbin.exe" /DEPENDENTS C:\Users\user\Desktop\multilateration_visualizer\protobuf\rust_microservice\target\release\grpc_microservice.exe
+Microsoft (R) COFF/PE Dumper Version 14.37.32822.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Users\user\Desktop\multilateration_visualizer\protobuf\rust_microservice\target\release\grpc_microservice.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    bcrypt.dll
+    ADVAPI32.dll
+    ws2_32.dll
+    kernel32.dll
+    ntdll.dll
+
+  Summary
+
+        5000 .data
+       14000 .pdata
+       AC000 .rdata
+        5000 .reloc
+      168000 .text
+        1000 _RDATA
+
+C:\Users\user>
+```

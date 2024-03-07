@@ -3,6 +3,10 @@ An Electron TypeScript React app with extra horsepower from Rust server
 
 The Rust CLI executable provides a protobuf gRPC API and handles the serial communication with the tags.
 
+# Components
+1. Electron App- [Electron App Documentation](electron/README.md)
+2. Rust gRPC API- [Rust App Documentation](protobuf/rust_microservice/README.md)
+
 # Multilateration Visualizer
 ![Multilateration Visualizer](/doc/multilateration.png)
 

@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow } from 'electron';
 import { ApiServerToClient, apiSchemasServerToClient } from '../../../shared/src/ipc/serverToClient';
 import superjson from 'superjson';
 

@@ -2,14 +2,16 @@ import { z } from 'zod';
 
 // Define Zod schemas for each API call
 
-export const ExampleCallRequest = z.object({});
-export const ExampleCallResponse = z.void();
+export const GrpcConnectRequest = z.object({});
+export const GrpcConnectResponse = z.object({
+  result: z.union([z.literal("connected"), z.object({ errMsg: z.string() })]),
+});
 
 // Define the API using Zod schemas
 export const apiSchemas = {
-  'ipc-example-call': {
-    request: ExampleCallRequest,
-    response: ExampleCallResponse,
+  'ipc-grpc-connect-or-reconnect': {
+    request: GrpcConnectRequest,
+    response: GrpcConnectResponse,
   },
 };
 

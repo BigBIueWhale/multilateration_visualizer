@@ -3,14 +3,19 @@ pub mod grpc_api {
 }
 use tonic::{transport::Server, Request, Response, Status};
 
-use grpc_api::{multilateral_visualizer_server::{MultilateralVisualizer, MultilateralVisualizerServer}, ReadFramesRequest, FrameData};
+use grpc_api::{
+    multilateral_visualizer_server::{MultilateralVisualizer, MultilateralVisualizerServer},
+    ReadFramesRequest,
+    FrameData,
+    Voxel
+};
 
 #[derive(Default)]
 pub struct MyGrpcServer;
 
 #[tonic::async_trait]
 impl MultilateralVisualizer for MyGrpcServer {
-    // TODO: Implement
+    
 }
 
 #[tokio::main]

@@ -355,6 +355,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4271d37baee1b8c7e4b708028c57d816cf9d2434acb33a549475f78c181f6253"
 
 [[package]]
+name = "grpc_microservice"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "futures-util",
+ "mpsc",
+ "prost",
+ "tokio",
+ "tokio-stream",
+ "tonic",
+ "tonic-build",
+]
+
+[[package]]
 name = "h2"
 version = "0.3.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -912,17 +926,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "serial_comm_microservice"
-version = "0.1.0"
-dependencies = [
- "mpsc",
- "prost",
- "tokio",
- "tonic",
- "tonic-build",
 ]
 
 [[package]]

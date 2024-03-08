@@ -1,4 +1,4 @@
-import { ApiServerToClient, apiSchemasServerToClient } from "shared/src/ipc/serverToClient";
+import { ApiServerToClient, apiSchemasServerToClient } from "../../../shared/src/ipc/serverToClient";
 import superjson from 'superjson';
 import { EventEmitter } from 'eventemitter3'
 

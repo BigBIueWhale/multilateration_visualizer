@@ -1,5 +1,6 @@
 {
   "name": "multilateration_visualizer",
+  "humanName": "Multilateration Visualizer",
   "version": "1.0.0",
   "description": "Electron TypeScript React 3js Multilateration Visualizer",
   "license": "UNLICENSED",

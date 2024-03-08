@@ -3,9 +3,7 @@ import { z } from 'zod';
 // Define Zod schemas for each API call
 
 export const GrpcConnectRequest = z.object({});
-export const GrpcConnectResponse = z.object({
-  result: z.union([z.literal("connected"), z.object({ errMsg: z.string() })]),
-});
+export const GrpcConnectResponse = z.object({});
 
 // Define the API using Zod schemas
 export const apiSchemas = {

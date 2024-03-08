@@ -9,14 +9,25 @@ pub mod grpc_api {
 use tonic::{transport::Server, Request, Response, Status};
 use futures::stream::Stream;
 use std::pin::Pin;
+use std::sync::{Arc, atomic::{AtomicBool, Ordering}};
 
 use grpc_api::multilateral_visualizer_server::{MultilateralVisualizer, MultilateralVisualizerServer};
 use grpc_api::{ReadFramesRequest, FrameData, Voxel};
 use tokio::sync::mpsc;
 use tokio_stream::wrappers::ReceiverStream;
+use tokio::signal;
 
-#[derive(Default)]
-pub struct MyGrpcServer;
+pub struct MyGrpcServer {
+    is_running: Arc<AtomicBool>,
+}
+
+impl MyGrpcServer {
+    fn new() -> Self {
+        MyGrpcServer {
+            is_running: Arc::new(AtomicBool::new(true)),
+        }
+    }
+}
 
 #[tonic::async_trait]
 impl MultilateralVisualizer for MyGrpcServer {
@@ -24,6 +35,7 @@ impl MultilateralVisualizer for MyGrpcServer {
 
     async fn read_frames(&self, _request: Request<ReadFramesRequest>) -> Result<Response<Self::read_framesStream>, Status> {
         let (tx, rx) = mpsc::channel(4);
+        let is_running = self.is_running.clone();
 
         tokio::spawn(async move {
             let voxels = vec![
@@ -42,7 +54,13 @@ impl MultilateralVisualizer for MyGrpcServer {
                 Voxel { color: "yellow".into(), x: 10, y: 11, z: 12 },
             ];
             let frame = FrameData { voxels };
-            let _ = tx.send(Ok(frame)).await;
+            while is_running.load(Ordering::Relaxed) {
+                if tx.send(Ok(frame.clone())).await.is_err() {
+                    return;
+                }
+                // Avoid spamming the poor slow TypeScript code😭🎻
+                tokio::time::sleep(std::time::Duration::from_millis(14)).await;
+            }
         });
 
         Ok(Response::new(Box::pin(ReceiverStream::new(rx))))
@@ -52,14 +70,23 @@ impl MultilateralVisualizer for MyGrpcServer {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = "[::1]:50051".parse()?;
-    let server = MyGrpcServer::default();
+    let server = MyGrpcServer::new();
+    let is_running = server.is_running.clone();
 
     println!("Server listening on {}", addr);
 
-    Server::builder()
-        .add_service(MultilateralVisualizerServer::new(server))
-        .serve(addr)
-        .await?;
+    tokio::spawn(async move {
+        Server::builder()
+            .add_service(MultilateralVisualizerServer::new(server))
+            .serve(addr)
+            .await
+            .unwrap();
+    });
+
+    // Wait for CTRL+C signal
+    signal::ctrl_c().await.expect("Failed to install CTRL+C signal handler");
+    println!("CTRL+C received, shutting down server...");
+    is_running.store(false, Ordering::Relaxed);
 
     Ok(())
 }

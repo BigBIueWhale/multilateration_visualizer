@@ -1,8 +1,8 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer } from 'electron';
-import { ChannelsClientToServer } from 'shared/src/ipc/clientToServer';
-import { ChannelsServerToClient } from "shared/src/ipc/serverToClient";
+import { ChannelsClientToServer } from '../shared/src/ipc/clientToServer';
+import { ChannelsServerToClient } from "../shared/src/ipc/serverToClient";
 
 const electronHandler = {
   ipcRenderer: {

@@ -12,39 +12,71 @@ export class MyApp {
     ) {}
 
     GrpcConnectOrReconnect = async (browserWindow: BrowserWindow): Promise<Zod.infer<typeof GrpcConnectResponse>> => {
+        // Avoid race condition of user pressing connect button
+        // multiple times before the connect is finished.
+        if (this.grpcClient !== null && this.stream === null) {
+            // Early exit because another instance of this function
+            // is busy doing waitForReady
+            return {};
+        }
+
         this.ResetGrpc();
 
-        try {
-            // Blocking call, this only happens during connect so not too bad.
-            this.grpcClient = new MultilateralVisualizerClient(
-                // Run the Rust gRPC server executable before running the electron app
-                '[::1]:50051',
-                grpc.credentials.createInsecure(),
-            );
-        }
-        catch (ex) {
-            return {
-                result: { errMsg: `Error connecting to gRPC server: ${ex}` },
-            };
-        }
+        const grpcServerHost = '[::1]:50051';
 
-        const stream: grpc.ClientReadableStream<FrameData> = this.grpcClient.readFrames({});
-        stream.on('error', (err: Error) => {
-            emitNotification(
-                browserWindow,
-                'notify-grpc-stream-error',
-                `gRPC stream error: ${err}`);
+        // Not a blocking call
+        this.grpcClient = new MultilateralVisualizerClient(
+            // Run the Rust gRPC server executable before running the electron app
+            grpcServerHost,
+            grpc.credentials.createInsecure(),
+        );
+
+        // 5 seconds
+        const deadlineMilliseconds: grpc.Deadline = (new Date()).getTime() + 5000;
+        // Not a blocking call
+        this.grpcClient.waitForReady(deadlineMilliseconds, (error: Error | undefined) => {
+            try {
+                if (error === undefined && this.grpcClient !== null) {
+                    this.stream = this.grpcClient.readFrames({});
+                    this.stream.on('error', (err: Error) => {
+                        this.stream = null;
+                        emitNotification(
+                            browserWindow,
+                            'notify-grpc-stream-error',
+                            `gRPC stream error: ${err}`);
+                    });
+                    this.stream.on('end', () => {
+                        this.stream = null;
+                        emitNotification(browserWindow, 'notify-grpc-stream-end', {});
+                    });
+                    this.stream.on('data', (frameData: FrameData) => {
+                        // Emit a notification to the client with the new frame data
+                        emitNotification(browserWindow, 'notify-new-frame', frameData);
+                    });
+                }
+                else {
+                    emitNotification(
+                        browserWindow,
+                        'notify-grpc-connect-error',
+                        `gRPC connect to host: "${grpcServerHost}" failed. Error message: ${error}`);
+                }
+            }
+            catch (ex) {
+                emitNotification(
+                    browserWindow,
+                    'notify-grpc-stream-error',
+                    `gRPC stream invoke error: ${ex}`);
+            }
+            if (this.stream === null) {
+                // If we failed to open the stream or to connect,
+                // mark the object as null so that the user can click again
+                // on the connect button and the race condition early exit
+                // at the beginning of this function won't trigger.
+                this.grpcClient?.close();
+                this.grpcClient = null;
+            }
         });
-        stream.on('end', () => {
-            emitNotification(browserWindow, "notify-grpc-stream-end", {});
-        });
-        stream.on('data', (frameData: FrameData) => {
-            // Emit a notification to the client with the new frame data
-            emitNotification(browserWindow, "notify-new-frame", frameData);
-        });
-        return {
-            result: "connected",
-        };
+        return {};
     }
 
     ResetGrpc(): void {
@@ -53,7 +85,7 @@ export class MyApp {
             this.stream.removeAllListeners('end');
             this.stream.removeAllListeners('error');
     
-            this.stream?.destroy();
+            this.stream.destroy();
         }
         this.stream = null;
 

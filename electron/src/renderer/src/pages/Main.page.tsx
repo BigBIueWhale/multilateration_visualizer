@@ -5,11 +5,12 @@ import { invokeRpc } from '../rpc/invokeRpc';
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContext, ToastNotifyMode } from "../Context/Toast.context";
 import { useGrpcEventHandlers } from '../hooks/useGrpcEventHandlers.hook';
-import { FrameDataReadContext } from '../Context/FrameData.context';
+import { FrameDataReadContext, FrameDataUpdateContext } from '../Context/FrameData.context';
 
 export function MainPage() {
     useGrpcEventHandlers();
     const toastContext = useContext(ToastContext);
+    const frameDataUpdateContext = useContext(FrameDataUpdateContext);
     const connectOrReconnect = useCallback(() => {
         invokeRpc('ipc-grpc-connect-or-reconnect', {}).catch((reason) => {
             toastContext.notify(
@@ -18,9 +19,14 @@ export function MainPage() {
                 ToastNotifyMode.ERROR,
             );
         }).then(() => {
-            console.log("ipc-grpc-connect-or-reconnect returned without exception");
+          frameDataUpdateContext.setFrameData((prev) => {
+            return {
+              ...prev,
+              connected: true,
+            };
+          });
         });
-    }, [toastContext]);
+    }, [toastContext, frameDataUpdateContext]);
 
     const frameDataReadContext = useContext(FrameDataReadContext);
 

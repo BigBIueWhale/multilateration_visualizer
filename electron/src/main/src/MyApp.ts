@@ -1,4 +1,3 @@
-//import { handleRpc, removeHandler } from "./rpc/handleRpc";
 import { emitNotification } from "./rpc/emitNotification";
 import { handleRpc, removeHandler } from "./rpc/handleRpc";
 import { GrpcConnectResponse } from '../../shared/src/ipc/clientToServer';

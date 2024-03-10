@@ -84,7 +84,16 @@ export class MyApp {
         this.stream?.removeAllListeners('data');
         this.stream?.removeAllListeners('end');
         this.stream?.removeAllListeners('error');
-    
+
+        const streamClosed = (arg: any | undefined) => {
+            console.log(`Stream closed: ${arg !== undefined ? arg : ""}`);
+        };
+
+        this.stream?.on('end', streamClosed);
+        // It's required to set a error handler, otherwise
+        // any errors causes a global crash of the program.
+        this.stream?.on('error', streamClosed);
+
         this.stream?.pause();
         this.stream?.cancel();
         this.stream?.destroy();

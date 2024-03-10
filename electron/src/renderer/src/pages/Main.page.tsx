@@ -37,9 +37,14 @@ export function MainPage() {
           <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
             <Button
               variant="contained"
-              color="primary"
               onClick={connectOrReconnect}
-              sx={{ marginRight: 2 }}
+              sx={{
+                marginRight: 2,
+                background: grpcIsConnected ? "grey" : "green",
+                ":hover": {
+                  background: grpcIsConnected ? "lightgrey" : "lightgreen",
+                }
+              }}
             >
               {grpcIsConnected ? 'Reconnect To Rust' : 'Connect To Rust'}
             </Button>

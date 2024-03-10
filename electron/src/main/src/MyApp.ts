@@ -86,9 +86,12 @@ export class MyApp {
             this.stream.removeAllListeners('end');
             this.stream.removeAllListeners('error');
     
+            this.stream.pause();
             this.stream.cancel();
+            this.stream.destroy();
+
+            this.stream = null;
         }
-        this.stream = null;
     }
 
     public setupEventHandlers(browserWindow: BrowserWindow): void {

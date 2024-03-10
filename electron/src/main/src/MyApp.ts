@@ -12,36 +12,31 @@ export class MyApp {
     ) {}
 
     GrpcConnectOrReconnect = async (browserWindow: BrowserWindow): Promise<Zod.infer<typeof GrpcConnectResponse>> => {
-        // Avoid race condition of user pressing connect button
-        // multiple times before the connect is finished.
-        if (this.grpcClient !== null && this.stream === null) {
-            // Early exit because another instance of this function
-            // is busy doing waitForReady
-            return {};
-        }
-
-        this.ResetGrpc();
-
         const grpcServerHost = '[::1]:50051';
 
-        // Not a blocking call
-        this.grpcClient = new MultilateralVisualizerClient(
-            // Run the Rust gRPC server executable before running the electron app
-            grpcServerHost,
-            grpc.credentials.createInsecure(),
-            {
-                'grpc.keepalive_time_ms': 3000,
-                'grpc.keepalive_timeout_ms': 3000,
-                'grpc.keepalive_permit_without_calls': 1,
-                'grpc.http2.max_pings_without_data': 0,
-                'grpc.http2.min_time_between_pings_ms': 3000,
-            }
-        );
+        if (this.grpcClient === null) {
+            // Not a blocking call
+            this.grpcClient = new MultilateralVisualizerClient(
+                // Run the Rust gRPC server executable before running the electron app
+                grpcServerHost,
+                grpc.credentials.createInsecure(),
+                {
+                    'grpc.keepalive_time_ms': 3000,
+                    'grpc.keepalive_timeout_ms': 3000,
+                    'grpc.keepalive_permit_without_calls': 1,
+                    'grpc.http2.max_pings_without_data': 0,
+                    'grpc.http2.min_time_between_pings_ms': 3000,
+                }
+            );
+        }
 
         // 5 seconds
         const deadlineMilliseconds: grpc.Deadline = (new Date()).getTime() + 5000;
         // Not a blocking call
         this.grpcClient.waitForReady(deadlineMilliseconds, (error: Error | undefined) => {
+            if (this.stream !== null) {
+                return;
+            }
             try {
                 if (error === undefined && this.grpcClient !== null) {
                     this.stream = this.grpcClient.readFrames({});
@@ -62,6 +57,11 @@ export class MyApp {
                     });
                 }
                 else {
+                    // If we failed to open the stream or to connect,
+                    // mark the object as null so that the user can click again
+                    // on the connect button and the race condition early exit
+                    // at the beginning of this function won't trigger.
+                    this.grpcClient = null;
                     emitNotification(
                         browserWindow,
                         'notify-grpc-connect-error',
@@ -74,36 +74,21 @@ export class MyApp {
                     'notify-grpc-stream-error',
                     `gRPC stream invoke error: ${ex}`);
             }
-            if (this.stream === null) {
-                // If we failed to open the stream or to connect,
-                // mark the object as null so that the user can click again
-                // on the connect button and the race condition early exit
-                // at the beginning of this function won't trigger.
-                this.grpcClient?.close();
-                this.grpcClient = null;
-            }
         });
         return {};
-    }
-
-    ResetGrpc(): void {
-        if (this.stream !== null) {
-            this.stream.removeAllListeners('data');
-            this.stream.removeAllListeners('end');
-            this.stream.removeAllListeners('error');
-    
-            this.stream.destroy();
-        }
-        this.stream = null;
-
-        this.grpcClient?.close();
-        this.grpcClient = null;
     }
 
     Reset(): void {
         removeHandler('ipc-grpc-connect-or-reconnect');
         // Close any resources here
-        this.ResetGrpc();
+        if (this.stream !== null) {
+            this.stream.removeAllListeners('data');
+            this.stream.removeAllListeners('end');
+            this.stream.removeAllListeners('error');
+    
+            this.stream.cancel();
+        }
+        this.stream = null;
     }
 
     public setupEventHandlers(browserWindow: BrowserWindow): void {

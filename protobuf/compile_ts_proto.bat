@@ -1,5 +1,8 @@
 @echo off
 
+REM The purpose here is to avoid code duplication.
+REM Define the types and gRPC API once in the .proto file, and then generate idiomatic TypeScript code, and Rust code!
+
 echo Compiling protobuf files
 
 echo Navigate to the folder in case the user ran this batch file from root directory of the project.

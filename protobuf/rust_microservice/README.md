@@ -44,7 +44,7 @@ The heavy lifting, and the serial communication is done here.
 1. Run `protobuf/unzip.bat`, and read the outputed usage.
 2. Based on the usage instructions, run: `protobuf/unzip.bat --platform your_platform`
 3. Open `rust_microservice` folder in VS Code (not any encompassing folder)
-4. Run `compile.bat` while online and wait for the build to succeed
+4. Run `compile.bat` while online and wait for the build to succeed. All further calls to cargo need to be ran in the same PowerShell / CMD window as a window in which you have already ran `compile.bat`. This is because `compile.bat` sets the `PROTOC` environment variable locally in the terminal.
 5. You can now use `target/release/grpc_microservice.exe` which must be ran before running the electron app.
 
 # Develop

@@ -20,6 +20,8 @@ export class MyApp {
                 // Run the Rust gRPC server executable before running the electron app
                 grpcServerHost,
                 grpc.credentials.createInsecure(),
+                // I don't know if these flags do anything
+                // but they can't hurt
                 {
                     'grpc.keepalive_time_ms': 3000,
                     'grpc.keepalive_timeout_ms': 3000,

@@ -1,7 +1,12 @@
 # Multilateration Visualizer
+This project is like indoor GPS.
+
 An Electron TypeScript React app with extra horsepower from Rust server
 
 The Rust CLI executable provides a protobuf gRPC API and handles the serial communication with the tags.
+
+# Integrate Visuals and Algorithm
+The algorithm chosen is specifically designed to integrate with the visualization while preserving a high throughput of the original data. This is the opposite of some algorithms which only give you a (X, Y, Z) position for each tag.
 
 # Components
 1. Electron App- [Electron App Documentation](electron/README.md)

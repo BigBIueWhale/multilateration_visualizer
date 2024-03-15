@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ToastContext, ToastNotifyMode } from "../Context/Toast.context";
 import { useGrpcEventHandlers } from '../hooks/useGrpcEventHandlers.hook';
 import { FrameDataReadContext, FrameDataUpdateContext } from '../Context/FrameData.context';
+import { MainPageContent } from '../components/MainPageContent/MainPageContent.component';
 
 export function MainPage() {
     useGrpcEventHandlers();
@@ -52,6 +53,7 @@ export function MainPage() {
               {packageJson.humanName} v{packageJson.version}
             </h1>
           </Box>
+          <MainPageContent />
         </Box>
       );
 }

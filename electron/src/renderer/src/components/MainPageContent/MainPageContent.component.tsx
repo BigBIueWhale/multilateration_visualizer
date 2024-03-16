@@ -26,7 +26,7 @@ export function MainPageContent() {
         {/* Focal point object */}
         <Box position={position} />
         {/* Floor */}
-        <Plane args={[100, 100]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
           <meshStandardMaterial attach="material" color="lightgrey" />
         </Plane>
         {/* Orbit Controls */}

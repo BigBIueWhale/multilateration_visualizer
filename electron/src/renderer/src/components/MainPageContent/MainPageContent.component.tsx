@@ -1,14 +1,58 @@
+import React, { useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Vector3 } from 'three';
+import { OrbitControls, Plane, Box } from '@react-three/drei';
+import { Slider, Box as MuiBox, Typography } from '@mui/material';
+
 export function MainPageContent() {
-    // TODO: Here we need to implement a visualization like this:
-    // https://threejs.org/docs/#examples/en/controls/OrbitControls
-    // https://threejs.org/examples/#misc_controls_orbit
-    // Specifically, the plan is to create a 3d world with a
-    // basic hard-coded floor. Default focal point at .0, .0, .0.
-    // Ability to adjust the focal point using 3 @mui sliders X, Y, Z
-    // and ability to move around the focal point with mouse drag
-    // which is just regular Orbit action.
-    return (
-        <>
-        </>
-    );
+  // State for the focal point position
+  const [position, setPosition] = useState(new Vector3(...[0, 0, 0]));
+
+  const handleSliderChange = (dimension: number, newValue: number) => {
+    setPosition((prevPosition) => {
+      const newPosition = [...prevPosition];
+      newPosition[dimension] = newValue;
+      return new Vector3(...newPosition);
+    });
+  };
+
+  return (
+    <>
+      <Canvas style={{ height: '400px', width: '100%' }}>
+        {/* Ambient light to illuminate the scene */}
+        <ambientLight intensity={0.5} />
+        {/* Directional light for shadows */}
+        <directionalLight position={[0, 10, 5]} intensity={1} />
+        {/* Focal point object */}
+        <Box position={position} />
+        {/* Floor */}
+        <Plane args={[100, 100]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+          <meshStandardMaterial attach="material" color="lightgrey" />
+        </Plane>
+        {/* Orbit Controls */}
+        <OrbitControls target={position} />
+      </Canvas>
+
+      {/* Sliders for X, Y, Z position adjustment */}
+      {(['x', 'y', 'z'] as const).map((dimension, i) => (
+        <MuiBox component="div" key={dimension} m={2}>
+          <Typography gutterBottom>
+            {dimension.toUpperCase()}-Axis Position
+          </Typography>
+          <Slider
+            min={-10}
+            max={10}
+            step={0.1}
+            value={position.toArray()[i]}
+            onChange={(_, newValue) => {
+                if (typeof newValue === 'number') {
+                    handleSliderChange(i, newValue)
+                }
+            }}
+            aria-labelledby="input-slider"
+          />
+        </MuiBox>
+      ))}
+    </>
+  );
 }

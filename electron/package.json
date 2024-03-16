@@ -95,13 +95,12 @@
     }
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
+    "@emotion/react": "11.11.3",
     "@emotion/styled": "^11.11.0",
     "@grpc/grpc-js": "1.10.0",
-    "@mui/material": "^5.15.13",
+    "@mui/material": "5.15.13",
     "@react-three/drei": "^9.102.5",
     "@react-three/fiber": "^8.15.19",
-    "@types/three": "^0.162.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-updater": "^5.3.0",

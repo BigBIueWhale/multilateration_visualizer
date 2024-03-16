@@ -34,8 +34,8 @@ export function MainPage() {
     const grpcIsConnected = frameDataReadContext.connected;
 
     return (
-        <Box sx={{ padding: 2, backgroundColor: '#f5f5f5' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+        <Box component="div" sx={{ padding: 2, backgroundColor: '#f5f5f5' }}>
+          <Box component="div" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
             <Button
               variant="contained"
               onClick={connectOrReconnect}

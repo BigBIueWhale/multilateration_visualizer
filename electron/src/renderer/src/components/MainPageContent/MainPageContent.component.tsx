@@ -17,8 +17,32 @@ export function MainPageContent() {
   };
 
   return (
-    <>
-      <Canvas style={{ height: '400px', width: '100%' }}>
+    <MuiBox component="div" display="flex" flexDirection="column" height="100%">
+      {/* Slider container */}
+      <MuiBox component="div" display="flex" justifyContent="space-around" alignItems="center" p={1}>
+        {(['x', 'y', 'z'] as const).map((dimension, i) => (
+          <MuiBox component="div" key={dimension} width="30%">
+            <Typography gutterBottom>
+              {dimension.toUpperCase()}-Axis Position
+            </Typography>
+            <Slider
+              min={-10}
+              max={10}
+              step={0.1}
+              value={position.toArray()[i]}
+              onChange={(_, newValue) => {
+                  if (typeof newValue === 'number') {
+                      handleSliderChange(i, newValue)
+                  }
+              }}
+              aria-labelledby="input-slider"
+            />
+          </MuiBox>
+        ))}
+      </MuiBox>
+
+      {/* Canvas with 3D world */}
+      <Canvas style={{ flexGrow: 1, width: '100%' }}>
         {/* Ambient light to illuminate the scene */}
         <ambientLight intensity={0.5} />
         {/* Directional light for shadows */}
@@ -32,27 +56,6 @@ export function MainPageContent() {
         {/* Orbit Controls */}
         <OrbitControls target={position} />
       </Canvas>
-
-      {/* Sliders for X, Y, Z position adjustment */}
-      {(['x', 'y', 'z'] as const).map((dimension, i) => (
-        <MuiBox component="div" key={dimension} m={2}>
-          <Typography gutterBottom>
-            {dimension.toUpperCase()}-Axis Position
-          </Typography>
-          <Slider
-            min={-10}
-            max={10}
-            step={0.1}
-            value={position.toArray()[i]}
-            onChange={(_, newValue) => {
-                if (typeof newValue === 'number') {
-                    handleSliderChange(i, newValue)
-                }
-            }}
-            aria-labelledby="input-slider"
-          />
-        </MuiBox>
-      ))}
-    </>
+    </MuiBox>
   );
 }

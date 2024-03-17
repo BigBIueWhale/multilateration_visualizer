@@ -34,26 +34,28 @@ export function MainPage() {
     const grpcIsConnected = frameDataReadContext.connected;
 
     return (
-        <Box component="div" sx={{ padding: 2, backgroundColor: '#f5f5f5' }}>
-          <Box component="div" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-            <Button
-              variant="contained"
-              onClick={connectOrReconnect}
-              sx={{
-                marginRight: 2,
-                background: grpcIsConnected ? "grey" : "green",
-                ":hover": {
-                  background: grpcIsConnected ? "lightgrey" : "lightgreen",
-                }
-              }}
-            >
-              {grpcIsConnected ? 'Reconnect To Rust' : 'Connect To Rust'}
-            </Button>
-            <h1 style={{ color: '#3f51b5', margin: 0 }}>
-              {packageJson.humanName} v{packageJson.version}
-            </h1>
-          </Box>
+      <Box component="div" sx={{ display: 'flex', flexDirection: 'column', padding: 2, backgroundColor: '#f5f5f5' }}>
+        <Box component="div" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+          <Button
+            variant="contained"
+            onClick={connectOrReconnect}
+            sx={{
+              marginRight: 2,
+              background: grpcIsConnected ? "grey" : "green",
+              ":hover": {
+                background: grpcIsConnected ? "lightgrey" : "lightgreen",
+              }
+            }}
+          >
+            {grpcIsConnected ? 'Reconnect To Rust' : 'Connect To Rust'}
+          </Button>
+          <h1 style={{ color: '#3f51b5', margin: 0 }}>
+            {packageJson.humanName} v{packageJson.version}
+          </h1>
+        </Box>
+        <Box component="div" sx={{ flexGrow: 1, overflow: 'none' }}>
           <MainPageContent />
         </Box>
-      );
+      </Box>
+    );
 }

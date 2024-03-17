@@ -17,7 +17,7 @@ export function MainPageContent() {
   };
 
   return (
-    <MuiBox component="div" display="flex" flexDirection="column" height="100%">
+    <MuiBox component="div" display="flex" flexDirection="column">
       {/* Slider container */}
       <MuiBox component="div" display="flex" justifyContent="space-around" alignItems="center" p={1}>
         {(['x', 'y', 'z'] as const).map((dimension, i) => (
@@ -35,14 +35,15 @@ export function MainPageContent() {
                       handleSliderChange(i, newValue)
                   }
               }}
+              valueLabelDisplay="auto"
               aria-labelledby="input-slider"
             />
           </MuiBox>
         ))}
       </MuiBox>
 
-      {/* Canvas with 3D world */}
-      <Canvas style={{ flexGrow: 1, width: '100%' }}>
+      {/* Canvas with 3D world, now allowed to expand */}
+      <Canvas style={{ flexGrow: 1, width: '100%', minHeight: '0px' }}> {/* Removed fixed height, added flexGrow */}
         {/* Ambient light to illuminate the scene */}
         <ambientLight intensity={0.5} />
         {/* Directional light for shadows */}

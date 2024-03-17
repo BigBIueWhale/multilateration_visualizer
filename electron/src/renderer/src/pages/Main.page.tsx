@@ -35,7 +35,7 @@ export function MainPage() {
 
     return (
       <Box component="div" sx={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: '#f5f5f5' }}>
-        <Box component="div" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+        <Box component="div" sx={{ display: 'flex', alignItems: 'center' }}>
           <Button
             variant="contained"
             onClick={connectOrReconnect}

@@ -5,9 +5,6 @@ import { OrbitControls, Plane, Box } from '@react-three/drei';
 import { Box as MuiBox } from '@mui/material';
 
 export function MainPageContent() {
-  // State for the focal point position
-  const [focalPointPosition, setFocalPointPosition] = useState(new Vector3(...[0, 0, 0]));
-
   const [canvasHeight, setCanvasHeight] = useState(0);
   const canvasRef = useRef<HTMLDivElement>(null);
 
@@ -37,13 +34,13 @@ export function MainPageContent() {
           {/* Directional light for shadows */}
           <directionalLight position={[0, 10, 5]} intensity={1} />
           {/* Focal point object */}
-          <Box position={focalPointPosition} />
+          <Box position={new Vector3(...[0, 0, 0])} />
           {/* Floor */}
           <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
             <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
           </Plane>
           {/* Orbit Controls */}
-          <OrbitControls target={focalPointPosition} />
+          <OrbitControls target={new Vector3(...[0, 0, 0])} />
         </Canvas>
       </MuiBox>
     </MuiBox>

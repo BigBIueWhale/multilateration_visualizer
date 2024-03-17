@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber';
 import { Vector3 } from 'three';
 import { OrbitControls, Plane, Box } from '@react-three/drei';
 import { Slider, Box as MuiBox, Typography } from '@mui/material';
-import superjson from 'superjson';
 
 export function MainPageContent() {
   // State for the focal point position
@@ -22,7 +21,6 @@ export function MainPageContent() {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(`canvasRef.current?: `, `${canvasRef.current?.offsetHeight} ${canvasRef.current?.offsetTop}`);
       const canvasHeight = canvasRef.current?.offsetTop || 0;
       const windowHeight = window.innerHeight;
       const margin = 10;

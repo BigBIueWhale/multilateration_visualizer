@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Vector3 } from 'three';
+import { Vector3, DoubleSide } from 'three';
 import { OrbitControls, Plane, Box } from '@react-three/drei';
 import { Slider, Box as MuiBox, Typography } from '@mui/material';
 
@@ -72,7 +72,7 @@ export function MainPageContent() {
           <Box position={position} />
           {/* Floor */}
           <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-            <meshStandardMaterial attach="material" color="lightgrey" />
+            <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
           </Plane>
           {/* Orbit Controls */}
           <OrbitControls target={position} />

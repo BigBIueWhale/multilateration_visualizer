@@ -63,18 +63,19 @@ export function MainPageContent() {
 
       <MuiBox ref={canvasRef} component="div" display="flex">
         {/* Adjust Canvas style to use calculated height */}
-        <Canvas style={{ width: '100%', height: `${canvasHeight}px`, minHeight: '0px' }}>        {/* Ambient light to illuminate the scene */}
-            <ambientLight intensity={0.5} />
-            {/* Directional light for shadows */}
-            <directionalLight position={[0, 10, 5]} intensity={1} />
-            {/* Focal point object */}
-            <Box position={position} />
-            {/* Floor */}
-            <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <Canvas style={{ width: '100%', height: `${canvasHeight}px`, minHeight: '0px' }}>
+          {/* Ambient light to illuminate the scene */}
+          <ambientLight intensity={0.5} />
+          {/* Directional light for shadows */}
+          <directionalLight position={[0, 10, 5]} intensity={1} />
+          {/* Focal point object */}
+          <Box position={position} />
+          {/* Floor */}
+          <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
             <meshStandardMaterial attach="material" color="lightgrey" />
-            </Plane>
-            {/* Orbit Controls */}
-            <OrbitControls target={position} />
+          </Plane>
+          {/* Orbit Controls */}
+          <OrbitControls target={position} />
         </Canvas>
       </MuiBox>
     </MuiBox>

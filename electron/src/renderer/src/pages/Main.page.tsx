@@ -34,7 +34,7 @@ export function MainPage() {
     const grpcIsConnected = frameDataReadContext.connected;
 
     return (
-      <Box component="div" sx={{ display: 'flex', flexDirection: 'column', padding: 2, backgroundColor: '#f5f5f5' }}>
+      <Box component="div" sx={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: '#f5f5f5' }}>
         <Box component="div" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
           <Button
             variant="contained"

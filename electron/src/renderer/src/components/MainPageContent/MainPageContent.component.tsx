@@ -29,31 +29,34 @@ export function MainPageContent() {
     setCameraTarget(new Vector3(0, 0, 0));
   };
 
+  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <MuiBox component="div" display="flex" flexDirection="column" height="100%">
       <MuiBox ref={canvasRef} component="div" display="flex">
-        {/* Adjust Canvas style to use calculated height */}
-        <Canvas
-          style={{ width: '100%', height: `${canvasHeight}px`, minHeight: '0px' }}
+        {/* Wrap the Canvas with a div and attach onDoubleClick and onMouseDown to it */}
+        <div
           onDoubleClick={handleDoubleClick}
+          onMouseDown={handleMouseDown}
+          style={{ width: '100%', height: `${canvasHeight}px`, minHeight: '0px' }}
         >
-          {/* Ambient light to illuminate the scene */}
-          <ambientLight intensity={0.5} />
-
-          {/* Directional light for shadows */}
-          <directionalLight position={[0, 10, 5]} intensity={1} />
-
-          {/* Focal point object */}
-          <Box position={cameraTarget} />
-
-          {/* Floor */}
-          <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-            <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
-          </Plane>
-
-          {/* Orbit Controls */}
-          <OrbitControls target={cameraTarget} />
-        </Canvas>
+          <Canvas style={{ width: '100%', height: '100%' }}>
+            {/* Ambient light to illuminate the scene */}
+            <ambientLight intensity={0.5} />
+            {/* Directional light for shadows */}
+            <directionalLight position={[0, 10, 5]} intensity={1} />
+            {/* Focal point object */}
+            <Box position={cameraTarget} />
+            {/* Floor */}
+            <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+              <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
+            </Plane>
+            {/* Orbit Controls */}
+            <OrbitControls target={cameraTarget} />
+          </Canvas>
+        </div>
       </MuiBox>
     </MuiBox>
   );

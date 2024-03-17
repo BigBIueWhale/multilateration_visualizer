@@ -2,19 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Vector3, DoubleSide } from 'three';
 import { OrbitControls, Plane, Box } from '@react-three/drei';
-import { Slider, Box as MuiBox, Typography } from '@mui/material';
+import { Box as MuiBox } from '@mui/material';
 
 export function MainPageContent() {
   // State for the focal point position
   const [focalPointPosition, setFocalPointPosition] = useState(new Vector3(...[0, 0, 0]));
-
-  const handleSliderChange = (dimension: number, newValue: number) => {
-    setFocalPointPosition((prevPosition) => {
-      const newPosition = [...prevPosition];
-      newPosition[dimension] = newValue;
-      return new Vector3(...newPosition);
-    });
-  };
 
   const [canvasHeight, setCanvasHeight] = useState(0);
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -37,30 +29,6 @@ export function MainPageContent() {
 
   return (
     <MuiBox component="div" display="flex" flexDirection="column" height="100%">
-      {/* Slider container */}
-      <MuiBox component="div" display="flex" justifyContent="space-around" alignItems="center" p={1}>
-        {(['x', 'y', 'z'] as const).map((dimension, i) => (
-          <MuiBox component="div" key={dimension} width="30%">
-            <Typography gutterBottom>
-              {dimension.toUpperCase()}-Axis Position
-            </Typography>
-            <Slider
-              min={-10}
-              max={10}
-              step={0.1}
-              value={focalPointPosition.toArray()[i]}
-              onChange={(_, newValue) => {
-                  if (typeof newValue === 'number') {
-                      handleSliderChange(i, newValue)
-                  }
-              }}
-              valueLabelDisplay="auto"
-              aria-labelledby="input-slider"
-            />
-          </MuiBox>
-        ))}
-      </MuiBox>
-
       <MuiBox ref={canvasRef} component="div" display="flex">
         {/* Adjust Canvas style to use calculated height */}
         <Canvas style={{ width: '100%', height: `${canvasHeight}px`, minHeight: '0px' }}>

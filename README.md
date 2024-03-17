@@ -15,6 +15,13 @@ The algorithm chosen is specifically designed to integrate with the visualizatio
 # Multilateration Visualizer
 ![Multilateration Visualizer](/doc/multilateration.png)
 
+# WIP
+This project is still a work in progress. The current plan involves:
+* Creating a simulation app for generating fake data of tags moving in 3d space (with realistic error margins).
+* Supporting a file format for the anchor locations in both the simulation app and in the Rust microservice.
+* Implementing the GUI (it's currently just a static 3d world).
+* Implementing the algorithm
+
 # Principal
 Multilateration assumes that we already know the positions of the anchors, and we get distances of the various tags from some of the anchors. Not all tags necessarily manage to find all (or any) anchors at all times.
 

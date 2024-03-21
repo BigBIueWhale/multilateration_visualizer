@@ -62,7 +62,7 @@ export function MainPageContent() {
             {frameData.voxels.map((voxel, index) => (
               <Box
                 key={index}
-                position={[voxel.x, voxel.y, voxel.z]}
+                position={[voxel.x - 0.5, voxel.y - 0.5, voxel.z - 0.5]}
                 args={[1, 1, 1]}
                 castShadow
               >

@@ -1,10 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Vector3, DoubleSide } from 'three';
 import { OrbitControls, Plane, Box } from '@react-three/drei';
 import { Box as MuiBox } from '@mui/material';
+import { FrameDataReadContext } from 'renderer/src/Context/FrameData.context';
+import { FrameData } from "../../../../shared/src/proto/grpc_api";
 
 export function MainPageContent() {
+  const frameDataReadContext = useContext(FrameDataReadContext);
+  const frameData: FrameData = frameDataReadContext.frameData;
+  // TODO: Draw semi-transparent voxels in the 3d world based on frameData.
+  // The definition of FrameData is:
+  /*
+export interface Voxel {
+  color: string;
+  x: number;
+  y: number;
+  z: number;
+}
+
+export interface FrameData {
+  voxels: Voxel[];
+}
+  */
+
   const [canvasHeight, setCanvasHeight] = useState(0);
   const [cameraTarget, setCameraTarget] = useState(new Vector3(0, 0, 0));
   const canvasRef = useRef<HTMLDivElement>(null);

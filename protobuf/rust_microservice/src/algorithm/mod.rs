@@ -35,7 +35,7 @@ fn sum_of_squared_differences(observation: &AnchorObservation, x: i64, y: i64, z
 }
 
 // Function to calculate the voxel representations for a tag based on anchor observations.
-pub fn calculate_voxel_representation(observations: Vec<AnchorObservation>, args: AlgorithmArgs) -> Vec<Voxel> {
+pub fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: AlgorithmArgs) -> Vec<Voxel> {
     let mut scored_voxels: Vec<ScoredVoxel> = Vec::new();
 
     // Iterate over each voxel in the world, computing scores based on distance observations.

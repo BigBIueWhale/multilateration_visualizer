@@ -14,9 +14,10 @@ message ReadFramesRequest {
 
 message Voxel {
     string color = 1;
-    int64 x = 2;
-    int64 y = 3;
-    int64 z = 4;
+    float opacity = 2;
+    int64 x = 6;
+    int64 y = 7;
+    int64 z = 8;
 }
 
 message FrameData {

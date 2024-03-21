@@ -6,6 +6,7 @@ import { FrameData, Voxel } from '../proto/grpc_api';
 // so that we get runtime type validation.
 export const VoxelSchema = z.object({
   color: z.string(),
+  opacity: z.number(),
   x: z.number(),
   y: z.number(),
   z: z.number(),

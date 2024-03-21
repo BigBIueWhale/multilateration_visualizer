@@ -39,8 +39,8 @@ impl MultilateralVisualizer for MyGrpcServer {
 
         tokio::spawn(async move {
             let voxels = vec![
-                Voxel { color: "red".into(), x: 1, y: 2, z: 3 },
-                Voxel { color: "blue".into(), x: 4, y: 5, z: 6 },
+                Voxel { color: "red".into(), opacity: 0.5, x: 1, y: 2, z: 3 },
+                Voxel { color: "blue".into(), opacity: 0.5, x: 4, y: 5, z: 6 },
             ];
             let frame = FrameData { voxels };
 
@@ -50,8 +50,8 @@ impl MultilateralVisualizer for MyGrpcServer {
             // Simulate streaming by sending another frame after a delay
             tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
             let voxels = vec![
-                Voxel { color: "green".into(), x: 7, y: 8, z: 9 },
-                Voxel { color: "yellow".into(), x: 10, y: 11, z: 12 },
+                Voxel { color: "green".into(), opacity: 0.5, x: 7, y: 8, z: 9 },
+                Voxel { color: "yellow".into(), opacity: 0.5, x: 10, y: 11, z: 12 },
             ];
             let frame = FrameData { voxels };
             while is_running.load(Ordering::Relaxed) {

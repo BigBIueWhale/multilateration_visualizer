@@ -4,18 +4,18 @@ use crate::algorithm::{AlgorithmArgs, AnchorObservation, position_estimate_cloud
 use crate::filter_voxels::filter_voxels;
 use crate::grpc_api::Voxel;
 
-pub const WORLD_SIZE: i64 = 1000;
+pub const WORLD_SIZE: i64 = 512;
 pub const P: f64 = 2.0;
 pub const L: f64 = 1.0;
 pub const TAGS: [&str; 3] = ["red", "green", "blue"];
-pub const TAG_VELOCITY: f64 = 1.0;
+pub const TAG_VELOCITY_FACTOR: f64 = WORLD_SIZE as f64 / 1000.0;
 pub const ANCHORS: [(i64, i64, i64); 4] = [
     (0, 0, 0),
     (WORLD_SIZE, 0, 0),
     (0, WORLD_SIZE, 0),
     (0, 0, WORLD_SIZE),
 ];
-pub const MEASUREMENT_ERROR_MARGIN: f64 = 10.0;
+pub const MEASUREMENT_ERROR_MARGIN: f64 = WORLD_SIZE as f64 / 50.0;
 
 pub struct TagState {
     position: (f64, f64, f64),
@@ -49,9 +49,9 @@ impl Simulation {
 
     pub fn update(&mut self) {
         for tag_state in &mut self.tag_states {
-            tag_state.position.0 += tag_state.velocity.0 * TAG_VELOCITY;
-            tag_state.position.1 += tag_state.velocity.1 * TAG_VELOCITY;
-            tag_state.position.2 += tag_state.velocity.2 * TAG_VELOCITY;
+            tag_state.position.0 += tag_state.velocity.0 * TAG_VELOCITY_FACTOR;
+            tag_state.position.1 += tag_state.velocity.1 * TAG_VELOCITY_FACTOR;
+            tag_state.position.2 += tag_state.velocity.2 * TAG_VELOCITY_FACTOR;
 
             if tag_state.position.0 < 0.0 || tag_state.position.0 > WORLD_SIZE as f64 {
                 tag_state.velocity.0 *= -1.0;

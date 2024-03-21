@@ -1,3 +1,5 @@
+use tokio::task;
+
 use crate::grpc_api::Voxel;
 
 // Struct for algorithm settings including world size, power, and brightness allowance.
@@ -31,13 +33,21 @@ fn sum_of_squared_differences(observation: &AnchorObservation, x: i64, y: i64, z
 }
 
 // Function to calculate the voxel representations for a tag based on anchor observations.
-pub fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: AlgorithmArgs) -> Vec<Voxel> {
+pub async fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: AlgorithmArgs) -> Vec<Voxel> {
     let mut scored_voxels: Vec<ScoredVoxel> = Vec::new();
-
+    // The (0, 0, 0) voxel has a point that is centered at (-0.5, -0.5, -0.5),
+    // by convention agreement with the React code.
+    let voxel_range = (-(args.world_size / 2) + 1)..(args.world_size / 2 + 1);
     // Iterate over each voxel in the world, computing scores based on distance observations.
-    for x in 0..args.world_size {
-        for y in 0..args.world_size {
-            for z in 0..args.world_size {
+    for x in voxel_range.clone() {
+        println!("Cooperative multitask: x: {} of voxel_range: {:?}", x, voxel_range);
+        // Yield control to the caller.
+        // This is not done in the inner-most loop for performance reasons.
+        // But it is still important so that the server stays responsive
+        // while this computation is running.
+        task::yield_now().await;
+        for y in voxel_range.clone() {
+            for z in voxel_range.clone() {
                 let sum_of_squared_diff = observations.iter()
                     .map(|obs| sum_of_squared_differences(obs, x, y, z))
                     .sum::<f64>();

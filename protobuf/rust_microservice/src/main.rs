@@ -48,7 +48,7 @@ impl MultilateralVisualizer for MyGrpcServer {
 
             while is_running.load(Ordering::Relaxed) {
                 simulation.update();
-                let voxels = simulation.get_frame();
+                let voxels = simulation.get_frame().await;
                 let frame = FrameData { voxels };
 
                 if tx.send(Ok(frame)).await.is_err() {

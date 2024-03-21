@@ -5,6 +5,7 @@ use crate::filter_voxels::filter_voxels;
 use crate::grpc_api::Voxel;
 
 pub const WORLD_SIZE: i64 = 512;
+pub const WORLD_RANGE: std::ops::Range<f64> = (-(WORLD_SIZE / 2)) as f64..(WORLD_SIZE / 2) as f64;
 pub const P: f64 = 2.0;
 pub const L: f64 = 1.0;
 pub const TAGS: [&str; 3] = ["red", "green", "blue"];
@@ -33,9 +34,9 @@ impl Simulation {
         let mut rng = ChaCha8Rng::from_seed(seed);
         let tag_states = TAGS.iter().map(|_| TagState {
             position: (
-                rng.gen_range(0.0..WORLD_SIZE as f64),
-                rng.gen_range(0.0..WORLD_SIZE as f64),
-                rng.gen_range(0.0..WORLD_SIZE as f64),
+                rng.gen_range(WORLD_RANGE),
+                rng.gen_range(WORLD_RANGE),
+                rng.gen_range(WORLD_RANGE),
             ),
             velocity: (
                 rng.gen_range(-1.0..1.0),
@@ -53,19 +54,19 @@ impl Simulation {
             tag_state.position.1 += tag_state.velocity.1 * TAG_VELOCITY_FACTOR;
             tag_state.position.2 += tag_state.velocity.2 * TAG_VELOCITY_FACTOR;
 
-            if tag_state.position.0 < 0.0 || tag_state.position.0 > WORLD_SIZE as f64 {
+            if tag_state.position.0 < WORLD_RANGE.start || tag_state.position.0 > WORLD_RANGE.end {
                 tag_state.velocity.0 *= -1.0;
             }
-            if tag_state.position.1 < 0.0 || tag_state.position.1 > WORLD_SIZE as f64 {
+            if tag_state.position.1 < WORLD_RANGE.start || tag_state.position.1 > WORLD_RANGE.end as f64 {
                 tag_state.velocity.1 *= -1.0;
             }
-            if tag_state.position.2 < 0.0 || tag_state.position.2 > WORLD_SIZE as f64 {
+            if tag_state.position.2 < WORLD_RANGE.start || tag_state.position.2 > WORLD_RANGE.end as f64 {
                 tag_state.velocity.2 *= -1.0;
             }
         }
     }
 
-    pub fn get_frame(&mut self) -> Vec<Voxel> {
+    pub async fn get_frame(&mut self) -> Vec<Voxel> {
         let mut frame = Vec::new();
 
         for (i, tag_state) in self.tag_states.iter().enumerate() {
@@ -92,7 +93,7 @@ impl Simulation {
                 tag_id: TAGS[i].to_string(),
             };
 
-            let voxels = position_estimate_cloud(observations, args);
+            let voxels = position_estimate_cloud(observations, args).await;
             let filtered_voxels = filter_voxels(voxels);
             frame.extend(filtered_voxels);
         }

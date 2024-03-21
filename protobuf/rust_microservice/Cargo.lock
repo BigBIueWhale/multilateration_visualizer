@@ -362,6 +362,8 @@ dependencies = [
  "futures-util",
  "mpsc",
  "prost",
+ "rand",
+ "rand_chacha",
  "tokio",
  "tokio-stream",
  "tonic",

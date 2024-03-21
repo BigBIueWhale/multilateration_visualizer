@@ -12,12 +12,16 @@ use std::pin::Pin;
 use std::sync::{Arc, atomic::{AtomicBool, Ordering}};
 
 use grpc_api::multilateral_visualizer_server::{MultilateralVisualizer, MultilateralVisualizerServer};
-use grpc_api::{ReadFramesRequest, FrameData, Voxel};
+use grpc_api::{ReadFramesRequest, FrameData};
 use tokio::sync::mpsc;
 use tokio_stream::wrappers::ReceiverStream;
 use tokio::signal;
 
 mod algorithm;
+mod filter_voxels;
+mod simulation;
+
+use crate::simulation::Simulation;
 
 pub struct MyGrpcServer {
     is_running: Arc<AtomicBool>,
@@ -40,26 +44,17 @@ impl MultilateralVisualizer for MyGrpcServer {
         let is_running = self.is_running.clone();
 
         tokio::spawn(async move {
-            let voxels = vec![
-                Voxel { color: "red".into(), opacity: 0.5, x: 1, y: 2, z: 3 },
-                Voxel { color: "blue".into(), opacity: 0.5, x: 4, y: 5, z: 6 },
-            ];
-            let frame = FrameData { voxels };
+            let mut simulation = Simulation::new();
 
-            if tx.send(Ok(frame)).await.is_err() {
-                return;
-            }
-            // Simulate streaming by sending another frame after a delay
-            tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
-            let voxels = vec![
-                Voxel { color: "green".into(), opacity: 0.5, x: 7, y: 8, z: 9 },
-                Voxel { color: "yellow".into(), opacity: 0.5, x: 10, y: 11, z: 12 },
-            ];
-            let frame = FrameData { voxels };
             while is_running.load(Ordering::Relaxed) {
-                if tx.send(Ok(frame.clone())).await.is_err() {
+                simulation.update();
+                let voxels = simulation.get_frame();
+                let frame = FrameData { voxels };
+
+                if tx.send(Ok(frame)).await.is_err() {
                     return;
                 }
+
                 // Avoid spamming the poor slow TypeScript code😭🎻
                 tokio::time::sleep(std::time::Duration::from_millis(14)).await;
             }

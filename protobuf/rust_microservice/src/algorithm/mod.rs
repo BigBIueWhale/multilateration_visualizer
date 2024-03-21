@@ -1,22 +1,18 @@
-pub mod grpc_api {
-    tonic::include_proto!("workhorse"); // The string specified here must match the proto package name
-}
-
-use grpc_api::Voxel;
+use crate::grpc_api::Voxel;
 
 // Struct for algorithm settings including world size, power, and brightness allowance.
 pub struct AlgorithmArgs {
-    world_size: i64, // The size of the world in each dimension (X, Y, Z)
-    p: f64, // Power for the inverse of the sum of squared differences
-    l: f64, // Brightness allowance for the tag
-    tag_id: String, // Unique identifier for the tag
+    pub world_size: i64, // The size of the world in each dimension (X, Y, Z)
+    pub p: f64, // Power for the inverse of the sum of squared differences
+    pub l: f64, // Brightness allowance for the tag
+    pub tag_id: String, // Unique identifier for the tag
 }
 
 // Struct to represent the distance from a tag to an anchor and the anchor's position.
 pub struct AnchorObservation {
-    distance: f64,
-    position: (i64, i64, i64),
-    color: String, // Color associated with the tag
+    pub distance: f64,
+    pub position: (i64, i64, i64),
+    pub color: String, // Color associated with the tag
 }
 
 // Struct for a voxel's position and its calculated score.

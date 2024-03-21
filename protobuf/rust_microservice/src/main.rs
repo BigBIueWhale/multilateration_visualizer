@@ -17,6 +17,8 @@ use tokio::sync::mpsc;
 use tokio_stream::wrappers::ReceiverStream;
 use tokio::signal;
 
+mod algorithm;
+
 pub struct MyGrpcServer {
     is_running: Arc<AtomicBool>,
 }

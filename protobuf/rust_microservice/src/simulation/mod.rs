@@ -6,8 +6,8 @@ use crate::grpc_api::Voxel;
 
 pub const WORLD_SIZE: i64 = 128;
 pub const WORLD_RANGE: std::ops::Range<f64> = (-(WORLD_SIZE / 2)) as f64..(WORLD_SIZE / 2) as f64;
-pub const P: f64 = 2.0;
-pub const L: f64 = 12.0;
+pub const P: f64 = 2.0; // See /README.md
+pub const L: f64 = 64.0; // See /README.md
 pub const TAGS: [&str; 3] = ["red", "green", "blue"];
 pub const TAG_VELOCITY_FACTOR: f64 = WORLD_SIZE as f64 / 100.0;
 pub const ANCHORS: [(i64, i64, i64); 4] = [
@@ -16,7 +16,7 @@ pub const ANCHORS: [(i64, i64, i64); 4] = [
     (0, WORLD_SIZE, 0),
     (0, 0, WORLD_SIZE),
 ];
-pub const MEASUREMENT_ERROR_MARGIN: f64 = WORLD_SIZE as f64 / 25.0;
+pub const MEASUREMENT_ERROR_MARGIN: f64 = 0.000000001;
 
 pub struct TagState {
     position: (f64, f64, f64),

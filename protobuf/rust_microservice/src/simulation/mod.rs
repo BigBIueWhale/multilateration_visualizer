@@ -82,7 +82,6 @@ impl Simulation {
                 observations.push(AnchorObservation {
                     distance: distance_with_error,
                     position: anchor_pos,
-                    color: TAGS[i].to_string(),
                 });
             }
 
@@ -90,11 +89,14 @@ impl Simulation {
                 world_size: WORLD_SIZE,
                 p: P,
                 l: L,
-                tag_id: TAGS[i].to_string(),
             };
 
             let voxels = position_estimate_cloud(observations, args);
-            let filtered_voxels = filter_voxels(voxels);
+            let mut filtered_voxels = filter_voxels(voxels);
+            // Fill-in the color
+            for voxel in filtered_voxels.iter_mut() {
+                voxel.color = TAGS[i].to_string();
+            }
             frame.extend(filtered_voxels);
         }
 

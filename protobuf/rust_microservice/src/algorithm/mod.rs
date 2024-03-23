@@ -5,14 +5,12 @@ pub struct AlgorithmArgs {
     pub world_size: i64, // The size of the world in each dimension (X, Y, Z)
     pub p: f64, // Power for the inverse of the sum of squared differences
     pub l: f64, // Brightness allowance for the tag
-    pub tag_id: String, // Unique identifier for the tag
 }
 
 // Struct to represent the distance from a tag to an anchor and the anchor's position.
 pub struct AnchorObservation {
     pub distance: f64,
     pub position: (i64, i64, i64),
-    pub color: String, // Color associated with the tag
 }
 
 // Struct for a voxel's position and its calculated score.
@@ -66,7 +64,7 @@ pub fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: Algor
 
     // Convert scored voxels into Voxel instances, applying color and opacity based on score.
     scored_voxels.into_iter().map(|sv| Voxel {
-        color: observations.first().unwrap().color.clone(), // Use the color from the first observation.
+        color: String::new(), // Caller will need to fill this in
         opacity: (sv.score * args.l).min(1.0).max(0.0) as f32, // Ensure opacity is within [0, 1].
         x: sv.x,
         y: sv.y,

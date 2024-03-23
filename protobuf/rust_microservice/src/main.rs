@@ -41,22 +41,23 @@ impl MultilateralVisualizer for MyGrpcServer {
 
     async fn read_frames(&self, _request: Request<ReadFramesRequest>) -> Result<Response<Self::read_framesStream>, Status> {
         let (tx, rx) = mpsc::channel(4);
+
         let is_running = self.is_running.clone();
 
-        tokio::spawn(async move {
+        std::thread::spawn(move || {
             let mut simulation = Simulation::new();
 
             while is_running.load(Ordering::Relaxed) {
                 simulation.update();
-                let voxels = simulation.get_frame().await;
+                let voxels = simulation.get_frame();
                 let frame = FrameData { voxels };
 
-                if tx.send(Ok(frame)).await.is_err() {
+                if tx.blocking_send(Ok(frame)).is_err() {
                     return;
                 }
 
                 // Avoid spamming the poor slow TypeScript code😭🎻
-                tokio::time::sleep(std::time::Duration::from_millis(14)).await;
+                std::thread::sleep(std::time::Duration::from_millis(14));
             }
         });
 

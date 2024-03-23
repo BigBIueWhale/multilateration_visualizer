@@ -66,7 +66,7 @@ impl Simulation {
         }
     }
 
-    pub async fn get_frame(&mut self) -> Vec<Voxel> {
+    pub fn get_frame(&mut self) -> Vec<Voxel> {
         let mut frame = Vec::new();
 
         for (i, tag_state) in self.tag_states.iter().enumerate() {
@@ -93,7 +93,7 @@ impl Simulation {
                 tag_id: TAGS[i].to_string(),
             };
 
-            let voxels = position_estimate_cloud(observations, args).await;
+            let voxels = position_estimate_cloud(observations, args);
             let filtered_voxels = filter_voxels(voxels);
             frame.extend(filtered_voxels);
         }

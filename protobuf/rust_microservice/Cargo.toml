@@ -18,3 +18,8 @@ rand_chacha = "0.3.1"
 
 [build-dependencies]
 tonic-build = "0.10.2"
+
+# https://stackoverflow.com/a/38804737/7753444
+# Compile with debugging symbols
+[profile.release]
+debug = true

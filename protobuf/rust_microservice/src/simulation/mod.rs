@@ -93,7 +93,7 @@ impl Simulation {
 
             let voxels = position_estimate_cloud(observations, args);
             let mut filtered_voxels = filter_voxels(voxels);
-            // Fill-in the color
+            // Fill-in the color only after filter, for efficiency.
             for voxel in filtered_voxels.iter_mut() {
                 voxel.color = TAGS[i].to_string();
             }

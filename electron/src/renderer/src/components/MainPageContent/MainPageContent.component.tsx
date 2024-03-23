@@ -55,7 +55,7 @@ export function MainPageContent() {
             {/* Focal point object */}
             <Box position={cameraTarget} />
             {/* Floor */}
-            <Plane args={[3.0, 3.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <Plane args={[25.0, 25.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
               <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
             </Plane>
             {/* Voxels */}

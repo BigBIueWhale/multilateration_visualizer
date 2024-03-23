@@ -4,12 +4,12 @@ use crate::algorithm::{AlgorithmArgs, AnchorObservation, position_estimate_cloud
 use crate::filter_voxels::filter_voxels;
 use crate::grpc_api::Voxel;
 
-pub const WORLD_SIZE: i64 = 512;
+pub const WORLD_SIZE: i64 = 32;
 pub const WORLD_RANGE: std::ops::Range<f64> = (-(WORLD_SIZE / 2)) as f64..(WORLD_SIZE / 2) as f64;
 pub const P: f64 = 2.0;
 pub const L: f64 = 1.0;
 pub const TAGS: [&str; 3] = ["red", "green", "blue"];
-pub const TAG_VELOCITY_FACTOR: f64 = WORLD_SIZE as f64 / 1000.0;
+pub const TAG_VELOCITY_FACTOR: f64 = WORLD_SIZE as f64 / 100.0;
 pub const ANCHORS: [(i64, i64, i64); 4] = [
     (0, 0, 0),
     (WORLD_SIZE, 0, 0),

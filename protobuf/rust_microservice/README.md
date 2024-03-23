@@ -157,7 +157,7 @@ The settings I used were:
 12. A CMD window will open with the text: `Server listening on [::1]:50051`.
 13. Go back the the Visual Studio window and click `⚪Record` (enable profiling).
 14. Run the Electron GUI and press `CONNECT TO RUST`. Let the Rust work hard for ~20 seconds.
-15. Press CTRL+C in the CMD window where the Rust app is running, and wait for Visual Studio to collect the analysis.
+15. Press CTRL+C in the CMD window where the Rust app is running to gracefully stop the Rust program, and wait for Visual Studio to collect the analysis.
 16. Visual Studio will automatically open a Report123xxx...diagsession tab with a function call stack (Hot path)
 17. We want to see everything, so on the top-right choose: `Settings` and make sure that `Show Just My Code` is unchecked, and that `Show Native Code` is checked.
 18. Click the blue text `Open details...`.
@@ -169,3 +169,7 @@ The settings I used were:
 23. Click on `Total CPU [unit, %]` such that it's in descending order 🔽.
 24. Click on `Show Hot Path` to bypass the junk and get to the important part (your own code).
 25. Double-click on a row to see line-by-line analysis of which lines of code are slow.
+
+### Result
+This is how the analysis looks in the performance profiler:
+![Performance Profiler Screenshot](/doc/performance_profiler.png)

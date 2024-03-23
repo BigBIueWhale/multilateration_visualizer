@@ -1,10 +1,23 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Vector3, DoubleSide, Color } from 'three';
+import { Canvas, extend, useThree } from '@react-three/fiber';
+import { Vector3, DoubleSide, GridHelper, ColorRepresentation } from 'three';
 import { OrbitControls, Plane, Box } from '@react-three/drei';
 import { Box as MuiBox } from '@mui/material';
 import { FrameDataReadContext } from 'renderer/src/Context/FrameData.context';
 import { FrameData } from "../../../../shared/src/proto/grpc_api";
+
+// Extend will make GridHelper available as a JSX component for the ruler-type system
+extend({ GridHelper });
+
+function Grid(props: { size: number | undefined, divisions: number | undefined, colorCenterLine: ColorRepresentation | undefined, colorGrid: ColorRepresentation | undefined }) {
+  const { scene } = useThree();
+  useEffect(() => {
+    const gridHelper = new GridHelper(props.size, props.divisions, props.colorCenterLine, props.colorGrid);
+    scene.add(gridHelper);
+    return () => { scene.remove(gridHelper); }
+  }, [props, scene]);
+  return null;
+}
 
 export function MainPageContent() {
   const frameDataReadContext = useContext(FrameDataReadContext);
@@ -49,15 +62,17 @@ export function MainPageContent() {
         >
           <Canvas style={{ width: '100%', height: '100%' }}>
             {/* Ambient light to illuminate the scene */}
-            <ambientLight intensity={0.5} />
+             <ambientLight intensity={0.5} />
             {/* Directional light for shadows */}
-            <directionalLight position={[0, 10, 5]} intensity={1} />
+             <directionalLight position={[0, 10, 5]} intensity={1} />
             {/* Focal point object */}
-            <Box position={cameraTarget} args={[7, 7, 7]} />
-            {/* Floor */}
+             <Box position={cameraTarget} args={[7, 7, 7]} />
+            {/* Floor with semi-transparency for nicer appearance and measurement aid */}
             <Plane args={[128.0, 128.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-              <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
+              <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" transparent opacity={0.5} />
             </Plane>
+            {/* Ruler-type Grid for easier visual measurements */}
+            <Grid size={128} divisions={32} colorCenterLine="red" colorGrid="white" />
             {/* Voxels */}
             {frameData.voxels.map((voxel, index) => (
               <Box
@@ -74,7 +89,7 @@ export function MainPageContent() {
                 />
               </Box>
             ))}
-            {/* Orbit Controls */}
+            {/* Camera travels in sphere around focal point */}
             <OrbitControls target={cameraTarget} />
           </Canvas>
         </div>

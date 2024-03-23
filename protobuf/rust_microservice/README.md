@@ -140,3 +140,32 @@ C:\Users\user>
 2. Run `cargo build --release` (make sure that cargo.toml is configured to compile with debug symbols)
 3. See the generated output: `target\release\grpc_microservice.exe`, `target\release\grpc_microservice.pdb`
 4. Then use vs studio community (not vscode). Just open the .exe compiled with debug info, make the exe the default project and use the profiler. It works great! (see Reddit discussion https://www.reddit.com/r/rust/comments/stedol/comment/hx7zq0a/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+
+The settings I used were:
+1. Open Visual Studio Community 2022 on Windows 10 22H2
+2. Continue without code
+3. Click `Debug` toolbar -> `Relaunch Performance Profiler`
+4. In the newly opened `Analysis Target` page, click `Change Target` dropdown menu.
+5. Choose `Executable` option from the dropdown menu.
+6. Set `Path to executable` to `C:\Users\user\Desktop\multilateration_visualizer\protobuf\rust_microservice\target\release\grpc_microservice.exe` (change to the full path to the compiled Rust EXE with debug symbols enabled).
+6. Set `Working directory:` to the containing folder of that exe. In my case: `C:\Users\user\Desktop\multilateration_visualizer\protobuf\rust_microservice\target\release`.
+7. Click `Ok`.
+8. In `Available Tools` section, check `CPU Usage` checkbox, and leave all other unchecked.
+9. Click the ⚙`Settings` icon near `CPU Usage` to open Performance Profiler Property Pages window.
+10. Change from `Default (1000 samples / second)` to `Low (100 samples / second)` and click Ok.
+11. Check the checkbox `Start with collection paused`, and click `Start`.
+12. A CMD window will open with the text: `Server listening on [::1]:50051`.
+13. Go back the the Visual Studio window and click `⚪Record` (enable profiling).
+14. Run the Electron GUI and press `CONNECT TO RUST`. Let the Rust work hard for ~20 seconds.
+15. Press CTRL+C in the CMD window where the Rust app is running, and wait for Visual Studio to collect the analysis.
+16. Visual Studio will automatically open a Report123xxx...diagsession tab with a function call stack (Hot path)
+17. We want to see everything, so on the top-right choose: `Settings` and make sure that `Show Just My Code` is unchecked, and that `Show Native Code` is checked.
+18. Click the blue text `Open details...`.
+19. A pop-up file explorer window will appear: `Find Source: thread.rs` with hint: Original location: `/rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library\std\src\sys\windows\thread.rs`. Choose the up-to-date `thread.rs` file from the Rust installation folder. In my I pasted into `File name:` text box the full path to thread.rs: `C:\Users\user\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\src\rust\library\std\src\sys\windows\thread.rs`.
+20. Generally speaking the standard library *.rs files can be found by starting in: `C:\Users\<your-username>\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\src\rust\library`. And following the `Original location:` hint (`library\`...).
+20. If for a specific standard library *.rs file you don't actually care about the line-by-line analysis of that file, you can choose to click `Cancel` on the dialog and continue until you find your own source code (that is part of your PDB so Visual Studio will show you line-by-line analysis).
+21. Actually you'll discover that that after choosing the full directory to `thread.rs` (or whichever is the first source file that Visual Studio requests), it automatically finds the rest of the source files of the standard library.
+22. Change `Current View:` dropdown to `Call Tree` instead of the default `Caller/Callee`.
+23. Click on `Total CPU [unit, %]` such that it's in descending order 🔽.
+24. Click on `Show Hot Path` to bypass the junk and get to the important part (your own code).
+25. Double-click on a row to see line-by-line analysis of which lines of code are slow.

@@ -134,3 +134,9 @@ File Type: EXECUTABLE IMAGE
 
 C:\Users\user>
 ```
+
+# Performance Profiling
+1. Make sure you're using Rust version `stable-x86_64-pc-windows-msvc`.
+2. Run `cargo build --release` (make sure that cargo.toml is configured to compile with debug symbols)
+3. See the generated output: `target\release\grpc_microservice.exe`, `target\release\grpc_microservice.pdb`
+4. Then use vs studio community (not vscode). Just open the .exe compiled with debug info, make the exe the default project and use the profiler. It works great! (see Reddit discussion https://www.reddit.com/r/rust/comments/stedol/comment/hx7zq0a/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)

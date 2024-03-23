@@ -37,6 +37,12 @@ pub fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: Algor
     // The (0, 0, 0) voxel has a point that is centered at (-0.5, -0.5, -0.5),
     // by convention agreement with the React code.
     let voxel_range = (-(args.world_size / 2) + 1)..(args.world_size / 2 + 1);
+
+    let iterations_per_dimension = voxel_range.end - voxel_range.start;
+    const NUM_DIMENSIONS: u32 = 3;
+    let num_voxels = iterations_per_dimension.pow(NUM_DIMENSIONS);
+    scored_voxels.reserve(num_voxels as usize);
+
     // Iterate over each voxel in the world, computing scores based on distance observations.
     for x in voxel_range.clone() {
         for y in voxel_range.clone() {

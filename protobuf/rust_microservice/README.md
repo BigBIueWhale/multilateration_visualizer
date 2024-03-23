@@ -156,7 +156,7 @@ The settings I used were:
 11. Check the checkbox `Start with collection paused`, and click `Start`.
 12. A CMD window will open with the text: `Server listening on [::1]:50051`.
 13. Go back the the Visual Studio window and click `⚪Record` (enable profiling).
-14. Run the Electron GUI and press `CONNECT TO RUST`. Let the Rust work hard for ~20 seconds.
+14. Run the Electron GUI and press `CONNECT TO RUST`. Let the Rust work hard for ~2 minutes for a good sampling.
 15. Press CTRL+C in the CMD window where the Rust app is running to gracefully stop the Rust program, and wait for Visual Studio to collect the analysis.
 16. Visual Studio will automatically open a Report123xxx...diagsession tab with a function call stack (Hot path)
 17. We want to see everything, so on the top-right choose: `Settings` and make sure that `Show Just My Code` is unchecked, and that `Show Native Code` is checked.

@@ -16,7 +16,7 @@ pub const ANCHORS: [(i64, i64, i64); 4] = [
     (0, WORLD_SIZE, 0),
     (0, 0, WORLD_SIZE),
 ];
-pub const MEASUREMENT_ERROR_MARGIN: f64 = 0.000000001;
+pub const MEASUREMENT_ERROR_MARGIN: f64 = WORLD_SIZE as f64 / 300.0;
 
 pub struct TagState {
     position: (f64, f64, f64),

@@ -32,6 +32,9 @@ fn sum_of_squared_differences(observation: &AnchorObservation, x: i64, y: i64, z
     (observation.distance - calculated_distance).powi(2)
 }
 
+// TODO: Make this implementation faster so it goes closer to 30 FPS instead of
+// the current frame every 3 or 4 seconds (with a world size of 128x128x128)
+
 // Function to calculate the voxel representations for a tag based on anchor observations.
 pub async fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: AlgorithmArgs) -> Vec<Voxel> {
     let mut scored_voxels: Vec<ScoredVoxel> = Vec::new();

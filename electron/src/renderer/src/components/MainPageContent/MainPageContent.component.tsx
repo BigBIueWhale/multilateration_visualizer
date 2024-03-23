@@ -53,9 +53,9 @@ export function MainPageContent() {
             {/* Directional light for shadows */}
             <directionalLight position={[0, 10, 5]} intensity={1} />
             {/* Focal point object */}
-            <Box position={cameraTarget} />
+            <Box position={cameraTarget} args={[7, 7, 7]} />
             {/* Floor */}
-            <Plane args={[25.0, 25.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+            <Plane args={[128.0, 128.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
               <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" />
             </Plane>
             {/* Voxels */}

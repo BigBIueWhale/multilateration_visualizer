@@ -15,6 +15,7 @@ futures = "0.3.30"
 futures-util = "0.3.30"
 rand = "0.8.5"
 rand_chacha = "0.3.1"
+rayon = "1.10.0"
 
 [build-dependencies]
 tonic-build = "0.10.2"

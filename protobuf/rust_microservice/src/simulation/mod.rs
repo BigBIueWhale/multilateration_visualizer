@@ -3,6 +3,10 @@ use rand_chacha::ChaCha8Rng;
 use crate::algorithm::{AlgorithmArgs, AnchorObservation, position_estimate_cloud};
 use crate::filter_voxels::filter_voxels;
 use crate::grpc_api::Voxel;
+use rayon;
+use rayon::iter::IntoParallelRefIterator;
+use rayon::iter::IndexedParallelIterator;
+use rayon::iter::ParallelIterator;
 
 pub const WORLD_SIZE: i64 = 128;
 pub const WORLD_RANGE: std::ops::Range<f64> = (-(WORLD_SIZE / 2)) as f64..(WORLD_SIZE / 2) as f64;
@@ -65,45 +69,47 @@ impl Simulation {
         }
     }
 
-    pub fn get_frame(&mut self) -> Vec<Voxel> {
-        let mut frame = Vec::new();
-
-        // TODO: Run the computation for each tag on a separate thread
-        // so that the frame is computed 3 times faster.
-        // This will involve a work scheduler that is in charge of 3 threads
-        // that can do general purpose work. This work scheduler will be initialized
-        // once by the caller and reused, so that no thread creation is
-        // involved in an inner loop.
-        for (i, tag_state) in self.tag_states.iter().enumerate() {
-            let mut observations = Vec::new();
-
-            for &anchor_pos in &ANCHORS {
-                let dx = tag_state.position.0 - anchor_pos.0 as f64;
-                let dy = tag_state.position.1 - anchor_pos.1 as f64;
-                let dz = tag_state.position.2 - anchor_pos.2 as f64;
-                let exact_distance = (dx * dx + dy * dy + dz * dz).sqrt();
-                let distance_with_error = exact_distance + self.rng.gen_range(-MEASUREMENT_ERROR_MARGIN..MEASUREMENT_ERROR_MARGIN);
-
-                observations.push(AnchorObservation {
-                    distance: distance_with_error,
-                    position: anchor_pos,
-                });
-            }
-
-            let args = AlgorithmArgs {
-                world_size: WORLD_SIZE,
-                l: L,
-            };
-
-            let voxels = position_estimate_cloud(observations, args);
-            let mut filtered_voxels = filter_voxels(voxels);
-            // Fill-in the color only after filter, for efficiency.
-            for voxel in filtered_voxels.iter_mut() {
-                voxel.color = TAGS[i].to_string();
-            }
-            frame.extend(filtered_voxels);
-        }
-
+    pub fn get_frame(&mut self, pool: &rayon::ThreadPool) -> Vec<Voxel> {
+        let seed: [u8; 32] = self.rng.gen();
+        let frame: Vec<Voxel> = pool.install(|| {
+            self.tag_states
+                .par_iter()
+                .enumerate()
+                .flat_map(|(i, tag_state)| {
+                    // Different threads cannot share a random number generator.
+                    let mut per_thread_rng = ChaCha8Rng::from_seed(seed);
+                    let mut observations = Vec::new();
+    
+                    for &anchor_pos in &ANCHORS {
+                        let dx = tag_state.position.0 - anchor_pos.0 as f64;
+                        let dy = tag_state.position.1 - anchor_pos.1 as f64;
+                        let dz = tag_state.position.2 - anchor_pos.2 as f64;
+                        let exact_distance = (dx * dx + dy * dy + dz * dz).sqrt();
+                        let distance_with_error = exact_distance
+                            + per_thread_rng.gen_range(-MEASUREMENT_ERROR_MARGIN..MEASUREMENT_ERROR_MARGIN);
+    
+                        observations.push(AnchorObservation {
+                            distance: distance_with_error,
+                            position: anchor_pos,
+                        });
+                    }
+    
+                    let args = AlgorithmArgs {
+                        world_size: WORLD_SIZE,
+                        l: L,
+                    };
+    
+                    let voxels = position_estimate_cloud(observations, args);
+                    let mut filtered_voxels = filter_voxels(voxels);
+                    // Fill-in the color only after filter, for efficiency.
+                    for voxel in filtered_voxels.iter_mut() {
+                        voxel.color = TAGS[i].to_string();
+                    }
+                    filtered_voxels
+                })
+                .collect()
+        });
+    
         frame
     }
 }

@@ -23,6 +23,8 @@ mod simulation;
 
 use crate::simulation::Simulation;
 
+use rayon::ThreadPoolBuilder;
+
 pub struct MyGrpcServer {
     is_running: Arc<AtomicBool>,
 }
@@ -45,11 +47,16 @@ impl MultilateralVisualizer for MyGrpcServer {
         let is_running = self.is_running.clone();
 
         std::thread::spawn(move || {
+            let pool = ThreadPoolBuilder::new()
+                .num_threads(simulation::TAGS.len())
+                .build()
+                .unwrap();
+
             let mut simulation = Simulation::new();
 
             while is_running.load(Ordering::Relaxed) {
                 simulation.update();
-                let voxels = simulation.get_frame();
+                let voxels = simulation.get_frame(&pool);
                 let frame = FrameData { voxels };
 
                 if tx.blocking_send(Ok(frame)).is_err() {

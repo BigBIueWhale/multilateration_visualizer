@@ -1,21 +1,48 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Canvas, extend, useThree } from '@react-three/fiber';
-import { Vector3, DoubleSide, GridHelper, ColorRepresentation } from 'three';
+import { Canvas, useThree } from '@react-three/fiber';
+import { Vector3, DoubleSide, ColorRepresentation, LineSegments, BufferGeometry, Float32BufferAttribute, LineBasicMaterial } from 'three';
 import { OrbitControls, Plane, Box } from '@react-three/drei';
 import { Box as MuiBox } from '@mui/material';
 import { FrameDataReadContext } from 'renderer/src/Context/FrameData.context';
 import { FrameData } from "../../../../shared/src/proto/grpc_api";
 
-// Extend will make GridHelper available as a JSX component for the ruler-type system
-extend({ GridHelper });
-
 function Grid(props: { size: number | undefined, divisions: number | undefined, colorCenterLine: ColorRepresentation | undefined, colorGrid: ColorRepresentation | undefined }) {
   const { scene } = useThree();
   useEffect(() => {
-    const gridHelper = new GridHelper(props.size, props.divisions, props.colorCenterLine, props.colorGrid);
-    scene.add(gridHelper);
-    return () => { scene.remove(gridHelper); }
+    const size = props.size || 10;
+    const divisions = props.divisions || 10;
+    const centerLineColor = props.colorCenterLine || 0xff0000;
+    const gridColor = props.colorGrid || 0xffffff;
+
+    const gridGeometry = new BufferGeometry();
+    const points = [];
+
+    // Create grid lines
+    for (let i = -size / 2; i <= size / 2; i += size / divisions) {
+      points.push(i, 0, -size / 2, i, 0, size / 2);
+      points.push(-size / 2, 0, i, size / 2, 0, i);
+    }
+
+    gridGeometry.setAttribute('position', new Float32BufferAttribute(points, 3));
+
+    const centerLineMaterial = new LineBasicMaterial({ color: centerLineColor, linewidth: 2 });
+    const gridMaterial = new LineBasicMaterial({ color: gridColor, linewidth: 1 });
+
+    const centerLines = new LineSegments(gridGeometry, centerLineMaterial);
+    const gridLines = new LineSegments(gridGeometry, gridMaterial);
+
+    centerLines.rotateY(-Math.PI / 2);
+    gridLines.rotateY(-Math.PI / 2);
+
+    scene.add(centerLines);
+    scene.add(gridLines);
+
+    return () => {
+      scene.remove(centerLines);
+      scene.remove(gridLines);
+    };
   }, [props, scene]);
+
   return null;
 }
 
@@ -71,7 +98,7 @@ export function MainPageContent() {
             {/* Ambient light to illuminate the scene */}
              <ambientLight intensity={0.5} />
             {/* Directional light for shadows */}
-             <directionalLight position={[0, 10, 5]} intensity={1} />
+             <directionalLight position={[0, 128, 60]} intensity={1} />
             {/* Focal point object */}
              <Box position={cameraTarget} args={[7, 7, 7]} />
             {/* Floor with semi-transparency for nicer appearance and measurement aid */}
@@ -79,7 +106,7 @@ export function MainPageContent() {
               <meshStandardMaterial side={DoubleSide} attach="material" color="lightgrey" transparent opacity={0.5} />
             </Plane>
             {/* Ruler-type Grid for easier visual measurements */}
-            <Grid size={128} divisions={32} colorCenterLine="red" colorGrid="white" />
+            <Grid size={128} divisions={32} colorCenterLine="red" colorGrid="#6497b1" />
             {/* Voxels */}
             {frameData.voxels.map((voxel, index) => (
               <Box

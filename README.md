@@ -60,6 +60,10 @@ https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_202
 
 - Add app logo
 
+- Good default camera view (instead of being zoomed into the cube by default)
+
+- Fix warning when reloading Electron app 9 times (event emitter leak).
+
 ### 1.0.1
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_01_2024_03_24/release
 

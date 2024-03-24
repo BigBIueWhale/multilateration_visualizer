@@ -106,6 +106,8 @@ export class MyApp {
         this.grpcClient = null;
     }
 
+    // TODO: Fix error that occurs when refreshing Electron app 9 times:
+    // (node:2256) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 closed listeners added to [BrowserWindow]. Use emitter.setMaxListeners() to increase limit
     public setupEventHandlers(browserWindow: BrowserWindow): void {
         // This call is required for when the renderer window reloads
         // in which case .on('ready-to-show') will trigger again,

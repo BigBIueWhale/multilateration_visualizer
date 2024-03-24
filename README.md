@@ -48,6 +48,13 @@ Therefore, this algorithm has 2 adjustable variables:
 2. L for the brightness allowance for each tag.
 
 # Release Notes
+### 1.0.1
+https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_01_2024_03_24/release
+
+- Further optimizations (parallelism etc).
+
+- Include in the release folder: the source code required to do performance profiling to the compiled Rust executable.
+
 ### 1.0.0
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_00_2024_03_24/release
 

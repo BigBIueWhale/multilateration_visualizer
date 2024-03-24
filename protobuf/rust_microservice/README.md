@@ -3,7 +3,7 @@ Rust workhorse for the electron app of this project.
 
 A CLI executable- gRPC server that provides an API specific for this application.
 
-The heavy lifting, and the serial communication is done here.
+The heavy lifting is done here.
 
 # Dev Dependencies
 1. If Windows:

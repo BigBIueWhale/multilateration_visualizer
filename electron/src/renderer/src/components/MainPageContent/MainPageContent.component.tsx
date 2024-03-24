@@ -60,7 +60,14 @@ export function MainPageContent() {
           onMouseDown={handleMouseDown}
           style={{ width: '100%', height: `${canvasHeight}px`, minHeight: '0px' }}
         >
-          <Canvas style={{ width: '100%', height: '100%' }}>
+          <Canvas
+            style={{ width: '100%', height: '100%' }}
+            camera={{
+              position: [0, 20, 40],
+              fov: 50,
+              near: 1,
+              far: 1000,
+            }}>
             {/* Ambient light to illuminate the scene */}
              <ambientLight intensity={0.5} />
             {/* Directional light for shadows */}
@@ -90,7 +97,14 @@ export function MainPageContent() {
               </Box>
             ))}
             {/* Camera travels in sphere around focal point */}
-            <OrbitControls target={cameraTarget} />
+            <OrbitControls
+              target={cameraTarget}
+              enablePan={true}
+              enableZoom={true}
+              enableRotate={true}
+              minDistance={10}
+              maxDistance={130}
+            />
           </Canvas>
         </div>
       </MuiBox>

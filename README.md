@@ -5,6 +5,8 @@ An Electron TypeScript React app with extra horsepower from Rust server
 
 The Rust CLI executable provides a protobuf gRPC API and handles the serial communication with the tags.
 
+![Multilateration Visualizer](/electron/assets/icon.png)
+
 # Integrate Visuals and Algorithm
 The algorithm chosen is specifically designed to integrate with the visualization while preserving a high throughput of the original data. This is the opposite of some algorithms which only give you a (X, Y, Z) position for each tag.
 
@@ -51,6 +53,13 @@ Therefore, this algorithm has 2 adjustable variables:
 2. L for the brightness allowance for each tag.
 
 # Release Notes
+### 1.0.2
+https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_2024_03_24/release
+
+- Fix some graphics glitches in renderer
+
+- Add app logo
+
 ### 1.0.1
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_01_2024_03_24/release
 

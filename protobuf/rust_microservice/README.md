@@ -175,3 +175,5 @@ This is how the analysis looks in the performance profiler:
 ![Performance Profiler Screenshot](/doc/performance_profiler.png)
 
 Note: Code implementations that use Tokio cooperative multitasking actually obfuscate performance profiling results. For high performance code it's probably better to use real threads.
+
+Note: Sometimes there's an off-by-one bug in the line view (source code view) of the performance profiler, so there could be a "Red hot" line, but actually the culprit is the previous code statement.

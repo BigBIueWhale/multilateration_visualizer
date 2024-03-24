@@ -3,7 +3,6 @@ use crate::grpc_api::Voxel;
 // Struct for algorithm settings including world size, power, and brightness allowance.
 pub struct AlgorithmArgs {
     pub world_size: i64, // The size of the world in each dimension (X, Y, Z)
-    pub p: f64, // Power for the inverse of the sum of squared differences
     pub l: f64, // Brightness allowance for the tag
 }
 
@@ -54,7 +53,8 @@ pub fn position_estimate_cloud(observations: Vec<AnchorObservation>, args: Algor
                 let score = if sum_of_squared_diff == 0.0 {
                     f64::MAX
                 } else {
-                    1.0 / sum_of_squared_diff.powf(args.p)
+                    // sum_of_squared_diff ^ 2 because we set P to 2 (See P variable in /README.md)
+                    1.0 / (sum_of_squared_diff * sum_of_squared_diff)
                 };
 
                 scored_voxels.push(ScoredVoxel { x, y, z, score });

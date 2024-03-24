@@ -6,7 +6,6 @@ use crate::grpc_api::Voxel;
 
 pub const WORLD_SIZE: i64 = 128;
 pub const WORLD_RANGE: std::ops::Range<f64> = (-(WORLD_SIZE / 2)) as f64..(WORLD_SIZE / 2) as f64;
-pub const P: f64 = 2.0; // See /README.md
 pub const L: f64 = 64.0; // See /README.md
 pub const TAGS: [&str; 3] = ["red", "green", "blue"];
 pub const TAG_VELOCITY_FACTOR: f64 = WORLD_SIZE as f64 / 100.0;
@@ -87,7 +86,6 @@ impl Simulation {
 
             let args = AlgorithmArgs {
                 world_size: WORLD_SIZE,
-                p: P,
                 l: L,
             };
 

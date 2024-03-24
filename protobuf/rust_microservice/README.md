@@ -137,7 +137,7 @@ C:\Users\user>
 
 # Performance Profiling
 1. Make sure you're using Rust version `stable-x86_64-pc-windows-msvc`.
-2. Run `cargo build --release` (make sure that cargo.toml is configured to compile with debug symbols). If you want better debugging, run `$env:RUSTFLAGS="-C inline-threshold=0 -C debuginfo=2 -C link-dead-code"; cargo build --release` in PowerShell to compile the Rust code with best profiler compatibility.
+2. Run `cargo build --release` (make sure that cargo.toml is configured to compile with debug symbols). If you want better debugging, run `$env:RUSTFLAGS="-C inline-threshold=0"; cargo build --release` in PowerShell to compile the Rust code with best profiler compatibility.
 3. See the generated output: `target\release\grpc_microservice.exe`, `target\release\grpc_microservice.pdb`
 4. Then use vs studio community (not vscode). Just open the .exe compiled with debug info, make the exe the default project and use the profiler. It works great! (see Reddit discussion https://www.reddit.com/r/rust/comments/stedol/comment/hx7zq0a/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
 
@@ -152,7 +152,7 @@ The settings I used were:
 7. Click `Ok`.
 8. In `Available Tools` section, check `CPU Usage` checkbox, and leave all other unchecked.
 9. Click the ⚙`Settings` icon near `CPU Usage` to open Performance Profiler Property Pages window.
-10. Change from `Default (1000 samples / second)` to `Low (100 samples / second)` and click Ok.
+10. Leave the default: `Default (1000 samples / second)`
 11. Check the checkbox `Start with collection paused`, and click `Start`.
 12. A CMD window will open with the text: `Server listening on [::1]:50051`.
 13. Go back the the Visual Studio window and click `⚪Record` (enable profiling).

@@ -89,12 +89,10 @@ const createWindow = async () => {
       mainWindow.show();
     }
     myApp.setupEventHandlers(mainWindow);
-    mainWindow.on('closed', () => {
-      myApp.onAppClosing();
-    });
   });
 
   mainWindow.on('closed', () => {
+    myApp.onAppClosing();
     mainWindow = null;
   });
 

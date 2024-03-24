@@ -68,6 +68,12 @@ impl Simulation {
     pub fn get_frame(&mut self) -> Vec<Voxel> {
         let mut frame = Vec::new();
 
+        // TODO: Run the computation for each tag on a separate thread
+        // so that the frame is computed 3 times faster.
+        // This will involve a work scheduler that is in charge of 3 threads
+        // that can do general purpose work. This work scheduler will be initialized
+        // once by the caller and reused, so that no thread creation is
+        // involved in an inner loop.
         for (i, tag_state) in self.tag_states.iter().enumerate() {
             let mut observations = Vec::new();
 

@@ -172,7 +172,7 @@ The settings I used were:
 
 ### Result
 This is how the analysis looks in the performance profiler:
-![Performance Profiler Screenshot](/doc/performance_profiler.png)
+![Performance Profiler Screenshot](./doc/performance_profiler.png)
 
 Note: Code implementations that use Tokio cooperative multitasking actually obfuscate performance profiling results. For high performance code it's probably better to use real threads.
 

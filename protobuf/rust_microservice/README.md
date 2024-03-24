@@ -61,6 +61,7 @@ Cargo.toml has been detected in this workspace.
 Would you like to generate launch configurations for its targets?
 ```
 In that case, click yes (that's what I did to get the launch.json).
+
 9. If when trying to debug, the build fails with `protoc not found` error, first run `compile.bat` and only then try to debug.
 10. Note: you can also click on the `Debug` button above the `async fn main()` function in VS Code, but Code LLDB is a better debugger. It also allows for more advanced debugging such as conditional breakpoints.
 

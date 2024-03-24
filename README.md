@@ -46,3 +46,15 @@ Giving P a larger value (such as 2) will cause large differences to have greater
 Therefore, this algorithm has 2 adjustable variables:
 1. P for power in the "Inverse of the sum of squared differences" formula.
 2. L for the brightness allowance for each tag.
+
+# Release Notes
+### 1.0.0
+https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_00_2024_03_24/release
+
+- Front-end code contains 3d visualization of any voxels given by Rust server.
+
+- All parameters are hard-coded.
+
+- Rust algorithm code is not fully optimized yet, 2 frame per second at 128x128x128 world.
+
+- Simulator only.

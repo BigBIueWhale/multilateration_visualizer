@@ -63,6 +63,8 @@ Therefore, this algorithm has 2 adjustable variables:
 
 - CPU with 6 CPU cores- 3 cores for Rust app, at least 2 cores for Electron app
 
+- Recommended mouse with mouse wheel for stable zooming gestures in the GUI
+
 # Release Notes
 ### 1.0.2
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_2024_03_25/release

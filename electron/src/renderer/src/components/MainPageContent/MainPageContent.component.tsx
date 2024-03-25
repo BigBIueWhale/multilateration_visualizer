@@ -131,7 +131,7 @@ export function MainPageContent() {
               enableZoom={true}
               enableRotate={true}
               minDistance={10}
-              maxDistance={130}
+              maxDistance={200}
             />
           </Canvas>
         </div>

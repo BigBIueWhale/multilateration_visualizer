@@ -103,8 +103,7 @@ export function MainPageContent() {
              <Box position={cameraTarget} args={[7, 7, 7]} />
             {/* Floor with semi-transparency for nicer appearance and measurement aid */}
             <Plane args={[128.0, 128.0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-              <meshStandardMaterial side={DoubleSide} attach="material" color="gold" transparent opacity={0.3} />
-            </Plane>
+              <meshBasicMaterial side={DoubleSide} attach="material" color="gold" transparent opacity={0.3} depthWrite={false} />            </Plane>
             {/* Ruler-type Grid for easier visual measurements */}
             <Grid size={128} divisions={32} colorCenterLine="red" colorGrid="#6497b1" />
             {/* Voxels */}

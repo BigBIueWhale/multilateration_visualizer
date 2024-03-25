@@ -65,7 +65,7 @@ Therefore, this algorithm has 2 adjustable variables:
 
 # Release Notes
 ### 1.0.2
-https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_2024_03_24/release
+https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_2024_03_25/release
 
 - Fix some graphics glitches in renderer, and improve graphics in general
 

@@ -15,7 +15,7 @@ The algorithm chosen is specifically designed to integrate with the visualizatio
 2. Rust gRPC API- [Rust App Documentation](protobuf/rust_microservice/README.md)
 
 # Demo
-https://youtu.be/c2tD1iSxk-I
+[https://youtu.be/c2tD1iSxk-I](https://youtu.be/sUaNntm6cG4)
 
 # Multilateration Visualizer
 ![Multilateration Visualizer](/doc/multilateration.png)

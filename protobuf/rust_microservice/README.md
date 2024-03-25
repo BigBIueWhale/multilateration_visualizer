@@ -3,7 +3,7 @@ Rust workhorse for the electron app of this project.
 
 A CLI executable- gRPC server that provides an API specific for this application.
 
-The heavy lifting, and the serial communication is done here.
+The heavy lifting is done here.
 
 # Dev Dependencies
 1. If Windows:
@@ -61,6 +61,7 @@ Cargo.toml has been detected in this workspace.
 Would you like to generate launch configurations for its targets?
 ```
 In that case, click yes (that's what I did to get the launch.json).
+
 9. If when trying to debug, the build fails with `protoc not found` error, first run `compile.bat` and only then try to debug.
 10. Note: you can also click on the `Debug` button above the `async fn main()` function in VS Code, but Code LLDB is a better debugger. It also allows for more advanced debugging such as conditional breakpoints.
 
@@ -172,7 +173,7 @@ The settings I used were:
 
 ### Result
 This is how the analysis looks in the performance profiler:
-![Performance Profiler Screenshot](/doc/performance_profiler.png)
+![Performance Profiler Screenshot](./doc/performance_profiler.png)
 
 Note: Code implementations that use Tokio cooperative multitasking actually obfuscate performance profiling results. For high performance code it's probably better to use real threads.
 

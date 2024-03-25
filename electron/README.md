@@ -14,7 +14,7 @@ That allows us to visualize the quality and accuracy of multilateration tracking
 8. Extension: vscode-proto3 v0.5.5 by zxh404
 
 # Build
-1. Navigate to `/protobuf` and run `compile_ts_proto.bat`
+1. Navigate to `/protobuf` and run in CMD window: `unzip.bat --platform win64` then: `compile_ts_proto.bat`
 
 TODO: Add a `compile_ts_proto.sh` so that the app can be built on Linux / MacOS.
 

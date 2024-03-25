@@ -52,17 +52,28 @@ Therefore, this algorithm has 2 adjustable variables:
 1. P for power in the "Inverse of the sum of squared differences" formula.
 2. L for the brightness allowance for each tag.
 
+# System Requirements
+- x86_64 Windows 10 22H2 or x86_64 Windows 11 23H2
+
+- 16 GB RAM
+
+- No strict requirements for storage technology or capacity
+
+- System support for WebGL. Dedicated graphics card recommended
+
+- CPU with 6 CPU cores- 3 cores for Rust app, at least 2 cores for Electron app
+
 # Release Notes
 ### 1.0.2
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_2024_03_24/release
 
-- Fix some graphics glitches in renderer
+- Fix some graphics glitches in renderer, and improve graphics in general
 
 - Add app logo
 
 - Good default camera view (instead of being zoomed into the cube by default)
 
-- Fix warning when reloading Electron app 9 times (event emitter leak).
+- Fix warning when reloading Electron app 9 times (event emitter leak)
 
 ### 1.0.1
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_01_2024_03_24/release

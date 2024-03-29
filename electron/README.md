@@ -1,5 +1,5 @@
 # Purpose
-Electron app that renders a 3d scene with Orbit control and displays Voxels based on the frames received form the Rust gRPC server via a stream response.
+Electron app that renders a 3d scene with Orbit control and displays Voxels based on the frames received from the Rust gRPC server via a stream response.
 
 That allows us to visualize the quality and accuracy of multilateration tracking in realtime.
 

@@ -66,6 +66,11 @@ Therefore, this algorithm has 2 adjustable variables:
 - Recommended mouse with mouse wheel for stable zooming gestures in the GUI
 
 # Release Notes
+### 1.0.3
+https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_03_2024_03_30/release
+
+- Disable auto-update: https://github.com/BigBIueWhale/multilateration_visualizer/issues/1#issue-2215586902. It makes no sense for this app to have an auto-update functionality!
+
 ### 1.0.2
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_02_2024_03_25/release
 

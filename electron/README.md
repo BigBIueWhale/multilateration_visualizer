@@ -14,13 +14,13 @@ That allows us to visualize the quality and accuracy of multilateration tracking
 8. Extension: vscode-proto3 v0.5.5 by zxh404
 
 # Build
-1. Navigate to `/protobuf` and run in CMD window: `unzip.bat --platform win64` then: `compile_ts_proto.bat`
-
 TODO: Add a `compile_ts_proto.sh` so that the app can be built on Linux / MacOS.
 
-2. Open the folder `/electron` in VS Code- so that debugging works (VS Code knows what project to run when choosing to debug)
+1. Open the folder `/electron` in VS Code- so that debugging works (VS Code knows what project to run when choosing to debug)
 
-3. Run `npm install` while online. The `node_modules` folder can then be transferred to an offline computer (transfer only works with the same OS) to work on this Electron app offline
+2. Run `npm install` while online. The `node_modules` folder can then be transferred to an offline computer (transfer only works with the same OS) to work on this Electron app offline
+
+3. Navigate to `/protobuf` and run in CMD window: `unzip.bat --platform win64` then: `compile_ts_proto.bat`
 
 4. Run `npm run build` and wait ~2 minutes for exit code 0 in building both `main` and `renderer`
 

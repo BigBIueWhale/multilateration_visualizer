@@ -1,0 +1,1 @@
+If this `assets` folder causes issue in any specific platform (e.g. MacOS), copy the structure of the origin: https://github.com/electron-react-boilerplate/electron-react-boilerplate/tree/8d3efc1426e91bae90e85b829ca338b14f61be03/assets

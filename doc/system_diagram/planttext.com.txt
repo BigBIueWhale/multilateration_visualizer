@@ -16,7 +16,7 @@ package "Rust Server" {
     Provides protobuf-defined data exchange
   }
   class "Data Processing Module" as DPM {
-    Handles calculations and serial communications
+    Handles calculations of probability clouds
   }
   GRPCS --> DPM : Delegates calculations
 }

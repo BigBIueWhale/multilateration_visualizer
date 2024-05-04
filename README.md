@@ -5,7 +5,7 @@ An Electron TypeScript React app with extra horsepower from Rust server
 
 The Rust CLI executable provides a protobuf gRPC API and handles the communication with the hardware devices, and calculates the position probability clouds.
 
-![Multilateration Visualizer](/electron/assets/icon.png)
+![Multilateration Visualizer](/electron/assets/icon_small.png)
 
 # Integrate Visuals and Algorithm
 The algorithm chosen is specifically designed to integrate with the visualization while preserving a high throughput of the original data. This is the opposite of some algorithms which only give you a (X, Y, Z) position for each tag.
@@ -13,6 +13,8 @@ The algorithm chosen is specifically designed to integrate with the visualizatio
 # Components
 1. Electron App- [Electron App Documentation](electron/README.md)
 2. Rust gRPC API- [Rust App Documentation](protobuf/rust_microservice/README.md)
+
+![System Diagram](/doc/system_diagram/diagram.png)
 
 # Demo
 [https://youtu.be/c2tD1iSxk-I](https://youtu.be/sUaNntm6cG4)

@@ -1,0 +1,26 @@
+@startuml
+skinparam style strictuml
+
+package "Electron App" {
+  class "MainPage" as MP {
+    Displays data using 3D visualizations
+  }
+  class "API Client" as APIC {
+    Handles gRPC calls to Rust Server
+  }
+  MP --> APIC : Uses
+}
+
+package "Rust Server" {
+  class "gRPC Server" as GRPCS {
+    Provides protobuf-defined data exchange
+  }
+  class "Data Processing Module" as DPM {
+    Handles calculations and serial communications
+  }
+  GRPCS --> DPM : Delegates calculations
+}
+
+APIC <-down-> GRPCS : gRPC Communication
+
+@enduml

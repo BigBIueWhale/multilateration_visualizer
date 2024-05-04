@@ -3,7 +3,7 @@ This project is like indoor GPS.
 
 An Electron TypeScript React app with extra horsepower from Rust server
 
-The Rust CLI executable provides a protobuf gRPC API and handles the serial communication with the tags.
+The Rust CLI executable provides a protobuf gRPC API and handles the communication with the hardware devices, and calculates the position probability clouds.
 
 ![Multilateration Visualizer](/electron/assets/icon.png)
 

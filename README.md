@@ -78,6 +78,7 @@ cd ../electron
 npm run package
 
 cd ../protobuf/rust_microservice
+cargo clean
 compile.bat
 ```
 

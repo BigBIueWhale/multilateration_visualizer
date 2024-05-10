@@ -68,6 +68,11 @@ Therefore, this algorithm has 2 adjustable variables:
 - Recommended mouse with mouse wheel for stable zooming gestures in the GUI
 
 # Release Notes
+### 1.0.4
+https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_04_2024_05_10/release
+
+- Fix annoying failure to reconnect: https://github.com/BigBIueWhale/multilateration_visualizer/issues/2#issue-2287917892
+
 ### 1.0.3
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_03_2024_03_30/release
 

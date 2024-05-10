@@ -23,8 +23,8 @@ export class MyApp {
             );
         }
 
-        // 5 seconds
-        const deadlineMilliseconds: grpc.Deadline = (new Date()).getTime() + 5000;
+        // 0.5 seconds
+        const deadlineMilliseconds: grpc.Deadline = (new Date()).getTime() + 500;
         // Not a blocking call
         this.grpcClient.waitForReady(deadlineMilliseconds, (error: Error | undefined) => {
             if (this.stream !== null) {

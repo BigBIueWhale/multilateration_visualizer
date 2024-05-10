@@ -68,7 +68,7 @@ export function MainPageContent() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [setCanvasHeight]);
 
   const handleDoubleClick = () => {
     setCameraTarget(new Vector3(0, 0, 0));

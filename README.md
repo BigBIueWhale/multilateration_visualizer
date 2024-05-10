@@ -67,6 +67,29 @@ Therefore, this algorithm has 2 adjustable variables:
 
 - Recommended mouse with mouse wheel for stable zooming gestures in the GUI
 
+# Creating A Release
+
+Run these commands in a cmd window:
+```bat
+cd electron
+npm run package
+
+cd ../protobuf/rust_microservice
+compile.bat
+```
+
+If you receive any errors during the build, follow the full build instructions and development environment setup for each of `./protobuf/rust_microservice`, `./electron` at their corresponding `README.md`s.
+
+Checkout to a new branch with the format: `RLS_XX_XX_XX_YYYY_MM_DD`
+
+In the new branch- create a folder `release` at the root directory of this repo.
+
+Then copy the following into the `release` folder:
+1. `protobuf/rust_microservice/target/release/grpc_microservice.exe`
+2. `electron/release/build/____ Setup X.X.X.exe`
+
+Commit and push the release folder to that release branch, then checkout to `master`. Do NOT create any `release` folder in `master`.
+
 # Release Notes
 ### 1.0.4
 https://github.com/BigBIueWhale/multilateration_visualizer/tree/RLS_01_00_04_2024_05_10/release

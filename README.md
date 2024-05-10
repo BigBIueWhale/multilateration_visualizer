@@ -71,7 +71,10 @@ Therefore, this algorithm has 2 adjustable variables:
 
 Run these commands in a cmd window:
 ```bat
-cd electron
+cd rust_microservice
+compile_ts_proto.bat
+
+cd ../electron
 npm run package
 
 cd ../protobuf/rust_microservice

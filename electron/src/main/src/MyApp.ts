@@ -23,8 +23,8 @@ export class MyApp {
             );
         }
 
-        // 5 seconds
-        const deadlineMilliseconds: grpc.Deadline = (new Date()).getTime() + 5000;
+        // 0.5 seconds
+        const deadlineMilliseconds: grpc.Deadline = (new Date()).getTime() + 500;
         // Not a blocking call
         this.grpcClient.waitForReady(deadlineMilliseconds, (error: Error | undefined) => {
             if (this.stream !== null) {
@@ -50,8 +50,13 @@ export class MyApp {
                     });
                 }
                 else {
-                    // If we failed to open the stream or to connect,
-                    // mark the object as null so that the user can click again
+                    // We failed to open the stream or to connect
+
+                    // CLose the grpcClient so that it doesn't continue trying
+                    // to connect in the background, which in practice would
+                    // block the user from trying to reconnect for ~10 seconds.
+                    this.grpcClient?.close();
+                    // Mark the object as null so that the user can click again
                     // on the connect button and the race condition early exit
                     // at the beginning of this function won't trigger.
                     this.grpcClient = null;

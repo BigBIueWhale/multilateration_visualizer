@@ -3,7 +3,7 @@ import { handleRpc, removeHandler } from "./rpc/handleRpc";
 import { GrpcConnectResponse } from '../../shared/src/ipc/clientToServer';
 import { BrowserWindow } from "electron";
 import * as grpc from '@grpc/grpc-js';
-import { MultilateralVisualizerClient, FrameData } from '../../shared/src/proto/grpc_api';
+import { MultilateralVisualizerClient, FrameData } from '../../shared/src/proto/grpc_api_with_services';
 
 export class MyApp {
     constructor(

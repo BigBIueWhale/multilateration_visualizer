@@ -1,4 +1,7 @@
 # Multilateration Visualizer
+
+**Project demo:** [https://youtu.be/c2tD1iSxk-I](https://youtu.be/sUaNntm6cG4)
+
 This project is like indoor GPS.
 
 An Electron TypeScript React app with extra horsepower from Rust server
@@ -15,9 +18,6 @@ The algorithm chosen is specifically designed to integrate with the visualizatio
 2. Rust gRPC API- [Rust App Documentation](protobuf/rust_microservice/README.md)
 
 ![System Diagram](/doc/system_diagram/diagram.png)
-
-# Demo
-[https://youtu.be/c2tD1iSxk-I](https://youtu.be/sUaNntm6cG4)
 
 # Multilateration Visualizer
 ![Multilateration Visualizer](/doc/multilateration.png)
